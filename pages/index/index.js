@@ -67,7 +67,12 @@ Page({
       map[item.value] = item.label;
       return map;
     }, {}),
-    editingId: ""
+    editingId: "",
+    // 在线搜索（后端代理抓取晋江）
+    apiBaseUrl: "http://localhost:3000",
+    onlineResults: [],
+    searchingOnline: false,
+    onlineSearchError: ""
   },
 
   onLoad() {
@@ -163,6 +168,116 @@ Page({
       searchResults: localResults,
       officialSearchLink: platform.searchUrl(keyword)
     });
+  },
+
+  /**
+   * 在线搜索 — 调用后端代理抓取晋江搜索结果
+   */
+  searchOnlineBook() {
+    const keyword = this.data.bookSearchKeyword.trim();
+
+    if (!keyword) {
+      wx.showToast({ title: "请输入小说名", icon: "none" });
+      return;
+    }
+
+    // 非晋江平台提示
+    const platform = platformOptions[this.data.platformIndex];
+    if (platform.name !== "晋江文学城") {
+      wx.showToast({ title: "在线搜索目前仅支持晋江", icon: "none" });
+      return;
+    }
+
+    this.setData({ searchingOnline: true, onlineResults: [], onlineSearchError: "" });
+
+    wx.request({
+      url: `${this.data.apiBaseUrl}/api/search`,
+      data: { keyword, platform: "jjwxc" },
+      method: "GET",
+      timeout: 20000,
+      success: (res) => {
+        if (res.statusCode === 200 && res.data && res.data.success) {
+          const results = res.data.results || [];
+          if (results.length === 0) {
+            this.setData({
+              onlineResults: [],
+              onlineSearchError: "晋江未返回匹配结果，建议换关键词或使用官方搜索链接确认"
+            });
+          } else {
+            this.setData({ onlineResults: results, onlineSearchError: "" });
+          }
+        } else {
+          this.setData({
+            onlineResults: [],
+            onlineSearchError: (res.data && res.data.error) || "搜索失败，请稍后重试"
+          });
+        }
+      },
+      fail: (err) => {
+        console.error("在线搜索失败:", err);
+        let msg = "网络请求失败";
+        if (err.errMsg) {
+          if (err.errMsg.includes("timeout")) msg = "请求超时，请检查后端是否启动";
+          else if (err.errMsg.includes("url not in domain list")) msg = "请在小程序开发工具中勾选「不校验合法域名」";
+        }
+        this.setData({ onlineResults: [], onlineSearchError: msg });
+      },
+      complete: () => {
+        this.setData({ searchingOnline: false });
+      }
+    });
+  },
+
+  /**
+   * 使用在线搜索结果填入表单
+   */
+  useOnlineResult(event) {
+    const index = event.currentTarget.dataset.index;
+    const item = this.data.onlineResults[index];
+    if (!item) return;
+
+    this.setData({
+      form: {
+        ...this.data.form,
+        title: item.title || "",
+        author: item.author || "",
+        platform: item.platform || "晋江文学城",
+        sourceId: item.novelid || "",
+        sourceUrl: item.sourceUrl || "",
+        summary: item.brief || ""
+      }
+    });
+    wx.showToast({ title: "已填入表单", icon: "success" });
+  },
+
+  /**
+   * 直接从在线搜索结果加入书架
+   */
+  importOnlineResult(event) {
+    const index = event.currentTarget.dataset.index;
+    const item = this.data.onlineResults[index];
+    if (!item) return;
+
+    const now = Date.now();
+    const newBook = {
+      id: String(now),
+      title: item.title || "",
+      author: item.author || "",
+      platform: item.platform || "晋江文学城",
+      sourceId: item.novelid || "",
+      sourceUrl: item.sourceUrl || "",
+      summary: item.brief || "",
+      wordCount: "",
+      status: "",
+      notes: "",
+      tags: [],
+      readingStatus: "want",
+      updatedAt: now
+    };
+
+    const books = [newBook, ...this.data.books];
+    this.persistBooks(books);
+    wx.showToast({ title: `已加入书架: ${item.title}`, icon: "success" });
   },
 
   useSearchAsDraft() {

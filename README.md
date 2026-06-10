@@ -40,6 +40,51 @@
 
 在没有平台授权 API 的情况下，直接爬取晋江、长佩、番茄、起点等平台数据会带来版权、服务协议、反爬和不正当竞争风险。MVP 采用“用户提供链接 + 用户手动确认信息 + 私人本地管理”的方式，把产品核心放在阅读记录、雷点、弃文原因、偏好标签和私人书单上。
 
+## 在线搜索（根据书名抓取晋江链接）
+
+项目包含一个后端搜索代理，可以真正根据书名从晋江搜索页抓取结构化结果（书名、作者、作品 ID、链接、简介摘要）。
+
+### 启动后端
+
+```bash
+cd backend
+npm install
+node server.js
+```
+
+服务默认在 `http://localhost:3000` 启动。
+
+### 小程序配置
+
+1. 用微信开发者工具打开项目
+2. 点击右上角「详情」→「本地设置」→ 勾选「不校验合法域名、web-view（业务域名）、TLS 版本以及 HTTPS 证书」
+3. 在小程序里选择「晋江文学城」平台，输入书名，点击「在线检索晋江」
+
+### API 接口
+
+```
+GET /api/search?keyword=小说名&platform=jjwxc
+```
+
+响应示例：
+```json
+{
+  "success": true,
+  "platform": "jjwxc",
+  "keyword": "小说名",
+  "results": [
+    {
+      "title": "书名",
+      "author": "作者",
+      "novelid": "1234567",
+      "sourceUrl": "https://www.jjwxc.net/onebook.php?novelid=1234567",
+      "platform": "晋江文学城",
+      "brief": "简介摘要..."
+    }
+  ]
+}
+```
+
 ## 运行方式
 
 用微信开发者工具打开本目录即可预览。`appid` 当前使用 `touristappid`，正式发布前需要替换为自己的小程序 AppID。

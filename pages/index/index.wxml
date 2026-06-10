@@ -20,7 +20,7 @@
       <button class="ghost" bindtap="copyOfficialSearchLink">复制官方搜索链接</button>
     </view>
     <view class="notice">
-      搜索优先命中你自己的书架；未命中时只生成官方平台搜索入口，不代替平台抓取结果页。
+      搜索优先命中你自己的书架；未命中时可"在线检索晋江"由后端代理抓取书名/链接，或复制官方搜索链接自行确认。
     </view>
 
     <view class="search-result" wx:if="{{officialSearchLink}}">
@@ -33,6 +33,28 @@
       <view class="book-title">{{item.title || '未命名作品'}}</view>
       <view class="book-meta">{{item.author || '未知作者'}} · {{item.platform || '未知平台'}} · {{item.displayStatus}}</view>
       <button class="mini result-action" size="mini" data-id="{{item.id}}" bindtap="editBook">编辑这条记录</button>
+    </view>
+
+    <!-- 在线搜索晋江：调用后端抓取书名 → 链接 -->
+    <view class="row" style="margin-top:16rpx;">
+      <button class="primary" bindtap="searchOnlineBook" loading="{{searchingOnline}}">在线检索晋江</button>
+    </view>
+    <view class="notice">在线检索由后端代理请求晋江搜索页，仅展示书名/作者/ID/链接，不抓取正文。</view>
+
+    <view class="search-result" wx:if="{{onlineSearchError}}">
+      <view class="result-label">提示</view>
+      <view>{{onlineSearchError}}</view>
+    </view>
+
+    <view class="search-result" wx:for="{{onlineResults}}" wx:key="novelid">
+      <view class="book-title">{{item.title || '未命名作品'}}</view>
+      <view class="book-meta">{{item.author || '未知作者'}} · 晋江文学城 · ID: {{item.novelid}}</view>
+      <view class="result-link">{{item.sourceUrl}}</view>
+      <view class="summary" wx:if="{{item.brief}}">{{item.brief}}</view>
+      <view class="row">
+        <button class="mini result-action" size="mini" data-index="{{index}}" bindtap="useOnlineResult">填入表单</button>
+        <button class="mini result-action" size="mini" data-index="{{index}}" bindtap="importOnlineResult">直接加入书架</button>
+      </view>
     </view>
   </view>
 
