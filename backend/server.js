@@ -14,12 +14,17 @@
 const express = require("express");
 const { searchJjwxc, searchJjwxcViaBaidu } = require("./scraper");
 
+const path = require("path");
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// ----- 静态文件 -----
+app.use(express.static(path.join(__dirname, "public")));
+
 // ----- 中间件 -----
 
-// CORS — 允许小程序开发工具 / web-view 访问
+// CORS — 允许外部客户端访问
 app.use((_req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
@@ -176,6 +181,6 @@ app.get("/api/search", async (req, res) => {
 
 // ----- 启动 -----
 app.listen(PORT, () => {
-  console.log(`📚 私人书架后端已启动 → http://localhost:${PORT}`);
-  console.log(`   搜索接口：GET /api/search?keyword=书名&platform=jjwxc`);
+  console.log(`📚 私人书架已启动 → http://localhost:${PORT}`);
+  console.log(`   浏览器打开上方地址即可使用`);
 });
