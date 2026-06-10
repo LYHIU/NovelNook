@@ -1,0 +1,13 @@
+{
+  "pages": [
+    "pages/index/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "私人书架",
+    "navigationBarBackgroundColor": "#f7f3ec",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f7f3ec"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

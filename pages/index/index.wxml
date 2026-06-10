@@ -1,0 +1,124 @@
+<view class="page">
+  <view class="topbar">
+    <view>
+      <view class="title">私人书架</view>
+      <view class="subtitle">只管理记录，不搬运正文</view>
+    </view>
+    <view class="badge">合规模式</view>
+  </view>
+
+  <view class="panel search-panel">
+    <view class="section-title">搜书</view>
+    <view class="search-grid">
+      <picker mode="selector" range="{{platformNames}}" value="{{platformIndex}}" bindchange="onPlatformChange">
+        <view class="field picker-field">{{platformNames[platformIndex]}}</view>
+      </picker>
+      <input class="field" value="{{bookSearchKeyword}}" placeholder="输入小说名" bindinput="onBookSearchInput" confirm-type="search" bindconfirm="searchPlatformBooks" />
+    </view>
+    <view class="row">
+      <button class="primary" bindtap="searchPlatformBooks">搜索</button>
+      <button class="ghost" bindtap="copyOfficialSearchLink">复制官方搜索链接</button>
+    </view>
+    <view class="notice">
+      搜索优先命中你自己的书架；未命中时只生成官方平台搜索入口，不代替平台抓取结果页。
+    </view>
+
+    <view class="search-result" wx:if="{{officialSearchLink}}">
+      <view class="result-label">官方搜索入口</view>
+      <view class="result-link">{{officialSearchLink}}</view>
+      <button class="mini result-action" size="mini" bindtap="useSearchAsDraft">创建待确认记录</button>
+    </view>
+
+    <view class="search-result" wx:for="{{searchResults}}" wx:key="id">
+      <view class="book-title">{{item.title || '未命名作品'}}</view>
+      <view class="book-meta">{{item.author || '未知作者'}} · {{item.platform || '未知平台'}} · {{item.displayStatus}}</view>
+      <button class="mini result-action" size="mini" data-id="{{item.id}}" bindtap="editBook">编辑这条记录</button>
+    </view>
+  </view>
+
+  <view class="panel import-panel">
+    <view class="section-title">链接导入</view>
+    <textarea
+      class="link-input"
+      value="{{importUrl}}"
+      maxlength="500"
+      placeholder="粘贴晋江作品页链接，例如 novelid=1234567"
+      bindinput="onImportUrlInput"
+    />
+    <view class="row">
+      <button class="primary" bindtap="parseJjwxcLink">解析作品 ID</button>
+      <button class="ghost" bindtap="resetForm">清空</button>
+    </view>
+    <view class="parsed-box" wx:if="{{parsedImport.sourceId}}">
+      <view class="result-label">已识别</view>
+      <view class="parsed-line">作品 ID：{{parsedImport.sourceId}}</view>
+      <view class="result-link">{{parsedImport.sourceUrl}}</view>
+    </view>
+    <view class="notice">
+      当前 MVP 不抓取晋江页面、不保存正文、不批量展示目录。链接只用于识别官方来源和作品 ID。
+    </view>
+  </view>
+
+  <view class="panel">
+    <view class="section-title">书籍信息</view>
+    <view class="grid">
+      <input class="field" value="{{form.title}}" placeholder="小说名称" data-key="title" bindinput="onFormInput" />
+      <input class="field" value="{{form.author}}" placeholder="作者" data-key="author" bindinput="onFormInput" />
+      <input class="field" value="{{form.platform}}" placeholder="平台" data-key="platform" bindinput="onFormInput" />
+      <input class="field" value="{{form.wordCount}}" placeholder="字数，如 32.5万" data-key="wordCount" bindinput="onFormInput" />
+      <input class="field" value="{{form.status}}" placeholder="状态，如 连载/完结" data-key="status" bindinput="onFormInput" />
+      <input class="field" value="{{form.sourceId}}" placeholder="作品 ID" data-key="sourceId" bindinput="onFormInput" />
+    </view>
+    <input class="field full-field" value="{{form.sourceUrl}}" placeholder="原站链接，可由搜索或链接解析自动填入" data-key="sourceUrl" bindinput="onFormInput" />
+    <textarea class="memo" value="{{form.summary}}" maxlength="300" placeholder="文案/简介建议手动简短记录，避免复制大段官方文案" data-key="summary" bindinput="onFormInput" />
+  </view>
+
+  <view class="panel">
+    <view class="section-title">我的记录</view>
+    <view class="status-tabs">
+      <block wx:for="{{statusOptions}}" wx:key="value">
+        <view class="status-tab {{form.readingStatus === item.value ? 'active' : ''}}" data-value="{{item.value}}" bindtap="setReadingStatus">
+          {{item.label}}
+        </view>
+      </block>
+    </view>
+    <textarea class="memo large" value="{{form.notes}}" maxlength="1000" placeholder="私人备注：好看点、雷点、弃文原因、喜欢的设定、看到哪里……" data-key="notes" bindinput="onFormInput" />
+    <input class="field" value="{{form.tagsText}}" placeholder="标签，用逗号分隔，如 强剧情,群像,雷点待查" data-key="tagsText" bindinput="onFormInput" />
+    <button class="save" bindtap="saveBook">{{editingId ? '更新到书架' : '加入本地书架'}}</button>
+  </view>
+
+  <view class="toolbar">
+    <input class="search" value="{{keyword}}" placeholder="检索我的书架" bindinput="onKeywordInput" />
+    <picker mode="selector" range="{{filterLabels}}" value="{{filterIndex}}" bindchange="onFilterChange">
+      <view class="filter">{{filterLabels[filterIndex]}}</view>
+    </picker>
+  </view>
+
+  <view class="empty" wx:if="{{filteredBooks.length === 0}}">
+    还没有匹配的书。先从链接导入或手动添加一本。
+  </view>
+
+  <block wx:for="{{filteredBooks}}" wx:key="id">
+    <view class="book-card">
+      <view class="book-head">
+        <view>
+          <view class="book-title">{{item.title || '未命名作品'}}</view>
+          <view class="book-meta">{{item.author || '未知作者'}} · {{item.platform || '未知平台'}} · {{item.wordCount || '字数未填'}}</view>
+        </view>
+        <view class="book-status">{{item.displayStatus}}</view>
+      </view>
+      <view class="summary" wx:if="{{item.summary}}">{{item.summary}}</view>
+      <view class="notes" wx:if="{{item.notes}}">{{item.notes}}</view>
+      <view class="tags" wx:if="{{item.tags.length > 0}}">
+        <block wx:for="{{item.tags}}" wx:key="*this">
+          <text class="tag">{{item}}</text>
+        </block>
+      </view>
+      <view class="actions">
+        <button size="mini" class="mini" data-id="{{item.id}}" bindtap="editBook">编辑</button>
+        <button size="mini" class="mini danger" data-id="{{item.id}}" bindtap="deleteBook">删除</button>
+        <button size="mini" class="mini" data-url="{{item.sourceUrl}}" bindtap="copySourceUrl">复制原站链接</button>
+      </view>
+    </view>
+  </block>
+</view>

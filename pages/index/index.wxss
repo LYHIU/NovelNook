@@ -1,0 +1,310 @@
+.page {
+  padding: 24rpx;
+  padding-bottom: 56rpx;
+}
+
+.topbar {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24rpx;
+}
+
+.title {
+  font-size: 44rpx;
+  font-weight: 700;
+}
+
+.subtitle {
+  color: #786f62;
+  font-size: 24rpx;
+  margin-top: 6rpx;
+}
+
+.badge {
+  background: #dbe7db;
+  border: 1rpx solid #b7cfb8;
+  border-radius: 6rpx;
+  color: #29492d;
+  font-size: 22rpx;
+  padding: 8rpx 12rpx;
+}
+
+.panel {
+  background: #fffdf8;
+  border: 1rpx solid #e2d8c8;
+  border-radius: 8rpx;
+  margin-bottom: 20rpx;
+  padding: 20rpx;
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  margin-bottom: 16rpx;
+}
+
+.link-input,
+.memo {
+  background: #ffffff;
+  border: 1rpx solid #ddd1c0;
+  border-radius: 6rpx;
+  font-size: 26rpx;
+  line-height: 1.5;
+  min-height: 118rpx;
+  padding: 18rpx;
+  width: 100%;
+}
+
+.memo {
+  margin-top: 14rpx;
+}
+
+.large {
+  min-height: 180rpx;
+}
+
+.row {
+  display: flex;
+  gap: 16rpx;
+  margin-top: 16rpx;
+}
+
+.primary,
+.ghost,
+.save {
+  border: 0;
+  font-size: 26rpx;
+  height: 72rpx;
+  line-height: 72rpx;
+  margin: 0;
+}
+
+.primary,
+.save {
+  background: #315d6b;
+  color: #ffffff;
+}
+
+.ghost {
+  background: #eee7dc;
+  color: #463f35;
+}
+
+.notice {
+  color: #8a5b26;
+  font-size: 23rpx;
+  line-height: 1.5;
+  margin-top: 14rpx;
+}
+
+.grid {
+  display: grid;
+  gap: 14rpx;
+  grid-template-columns: 1fr 1fr;
+}
+
+.search-grid {
+  display: grid;
+  gap: 14rpx;
+  grid-template-columns: 210rpx 1fr;
+}
+
+.field,
+.search,
+.filter {
+  background: #ffffff;
+  border: 1rpx solid #ddd1c0;
+  border-radius: 6rpx;
+  font-size: 26rpx;
+  min-height: 68rpx;
+  padding: 0 16rpx;
+}
+
+.picker-field {
+  align-items: center;
+  display: flex;
+}
+
+.search-result {
+  background: #ffffff;
+  border: 1rpx solid #dfd6c9;
+  border-radius: 8rpx;
+  margin-top: 16rpx;
+  padding: 16rpx;
+}
+
+.parsed-box {
+  background: #f1f7f4;
+  border: 1rpx solid #c6ddd0;
+  border-radius: 8rpx;
+  margin-top: 16rpx;
+  padding: 16rpx;
+}
+
+.parsed-line {
+  color: #29492d;
+  font-size: 25rpx;
+  line-height: 1.45;
+}
+
+.result-label {
+  color: #315d6b;
+  font-size: 23rpx;
+  font-weight: 700;
+  margin-bottom: 8rpx;
+}
+
+.full-field {
+  margin-top: 14rpx;
+  width: 100%;
+}
+
+.result-link {
+  color: #5e564b;
+  font-size: 23rpx;
+  line-height: 1.45;
+  word-break: break-all;
+}
+
+.result-action {
+  margin-top: 12rpx;
+}
+
+.status-tabs {
+  display: grid;
+  gap: 12rpx;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.status-tab {
+  background: #eee7dc;
+  border-radius: 6rpx;
+  color: #51483d;
+  font-size: 24rpx;
+  padding: 16rpx 8rpx;
+  text-align: center;
+}
+
+.status-tab.active {
+  background: #315d6b;
+  color: #ffffff;
+}
+
+.save {
+  margin-top: 16rpx;
+  width: 100%;
+}
+
+.toolbar {
+  display: grid;
+  gap: 14rpx;
+  grid-template-columns: 1fr 180rpx;
+  margin: 24rpx 0 18rpx;
+}
+
+.filter {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.empty {
+  color: #786f62;
+  font-size: 26rpx;
+  padding: 36rpx 0;
+  text-align: center;
+}
+
+.book-card {
+  background: #ffffff;
+  border: 1rpx solid #dfd6c9;
+  border-radius: 8rpx;
+  margin-bottom: 18rpx;
+  padding: 20rpx;
+}
+
+.book-head {
+  align-items: flex-start;
+  display: flex;
+  gap: 14rpx;
+  justify-content: space-between;
+}
+
+.book-title {
+  font-size: 31rpx;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.book-meta {
+  color: #756d61;
+  font-size: 23rpx;
+  line-height: 1.45;
+  margin-top: 6rpx;
+}
+
+.book-status {
+  background: #edf4f4;
+  border-radius: 6rpx;
+  color: #315d6b;
+  flex: 0 0 auto;
+  font-size: 22rpx;
+  padding: 7rpx 10rpx;
+}
+
+.summary,
+.notes {
+  color: #413a32;
+  font-size: 25rpx;
+  line-height: 1.55;
+  margin-top: 14rpx;
+  white-space: pre-wrap;
+}
+
+.notes {
+  background: #f8f2e8;
+  border-radius: 6rpx;
+  padding: 14rpx;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+  margin-top: 14rpx;
+}
+
+.tag {
+  background: #eee7dc;
+  border-radius: 6rpx;
+  color: #51483d;
+  font-size: 22rpx;
+  padding: 7rpx 10rpx;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-top: 16rpx;
+}
+
+.mini {
+  background: #f4efe7;
+  border: 1rpx solid #ded2c2;
+  color: #443c33;
+  margin: 0;
+}
+
+.danger {
+  color: #8f2d2d;
+}
+
+@media (max-width: 360px) {
+  .grid,
+  .search-grid,
+  .toolbar {
+    grid-template-columns: 1fr;
+  }
+}
