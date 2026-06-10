@@ -52,6 +52,7 @@ Page({
       sourceUrl: ""
     },
     bookSearchKeyword: "",
+    bookAuthorFilter: "",
     platformIndex: 0,
     platformNames: platformOptions.map((item) => item.name),
     officialSearchLink: "",
@@ -102,6 +103,10 @@ Page({
 
   onBookSearchInput(event) {
     this.setData({ bookSearchKeyword: event.detail.value });
+  },
+
+  onBookAuthorInput(event) {
+    this.setData({ bookAuthorFilter: event.detail.value });
   },
 
   onImportUrlInput(event) {
@@ -175,6 +180,7 @@ Page({
    */
   searchOnlineBook() {
     const keyword = this.data.bookSearchKeyword.trim();
+    const author = this.data.bookAuthorFilter.trim();
 
     if (!keyword) {
       wx.showToast({ title: "请输入小说名", icon: "none" });
@@ -190,9 +196,12 @@ Page({
 
     this.setData({ searchingOnline: true, onlineResults: [], onlineSearchError: "" });
 
+    const requestData = { keyword, platform: "jjwxc" };
+    if (author) requestData.author = author;
+
     wx.request({
       url: `${this.data.apiBaseUrl}/api/search`,
-      data: { keyword, platform: "jjwxc" },
+      data: requestData,
       method: "GET",
       timeout: 20000,
       success: (res) => {

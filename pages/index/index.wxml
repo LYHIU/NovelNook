@@ -14,6 +14,7 @@
         <view class="field picker-field">{{platformNames[platformIndex]}}</view>
       </picker>
       <input class="field" value="{{bookSearchKeyword}}" placeholder="输入小说名" bindinput="onBookSearchInput" confirm-type="search" bindconfirm="searchPlatformBooks" />
+      <input class="field" value="{{bookAuthorFilter}}" placeholder="作者（可选，用于筛选）" bindinput="onBookAuthorInput" />
     </view>
     <view class="row">
       <button class="primary" bindtap="searchPlatformBooks">搜索</button>

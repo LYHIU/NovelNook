@@ -12,7 +12,7 @@
  */
 
 const express = require("express");
-const { searchJjwxc } = require("./scraper");
+const { searchJjwxc, searchJjwxcViaBaidu } = require("./scraper");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -68,6 +68,7 @@ app.get("/api/health", (_req, res) => {
 app.get("/api/search", async (req, res) => {
   const keyword = (req.query.keyword || "").trim();
   const platform = (req.query.platform || "jjwxc").toLowerCase();
+  const author = (req.query.author || "").trim();
 
   // 参数校验
   if (!keyword) {
@@ -96,17 +97,57 @@ app.get("/api/search", async (req, res) => {
   }
 
   try {
-    const results = await searchJjwxc(keyword);
+    // 双通道策略：
+    // 通道 1：晋江 search_ajax.php（快速，限 5 条）
+    const ajaxResults = await searchJjwxc(keyword);
 
+    // 如果指定了作者，先检查 AJAX 结果是否包含该作者
+    if (author) {
+      const authorMatches = ajaxResults.filter(
+        (r) => r.author.includes(author) || author.includes(r.author)
+      );
+
+      if (authorMatches.length > 0) {
+        console.log(
+          `[search] keyword="${keyword}" author="${author}" → AJAX 命中 ${authorMatches.length} 条`
+        );
+        return res.json({
+          success: true,
+          platform,
+          keyword,
+          author,
+          source: "ajax",
+          results: authorMatches,
+        });
+      }
+
+      // 通道 2：Baidu 搜索引擎回退
+      console.log(
+        `[search] keyword="${keyword}" author="${author}" → AJAX 未命中，回退 Baidu`
+      );
+      const baiduResults = await searchJjwxcViaBaidu(keyword, author);
+
+      return res.json({
+        success: true,
+        platform,
+        keyword,
+        author,
+        source: "baidu",
+        results: baiduResults,
+      });
+    }
+
+    // 未指定作者，直接返回 AJAX 结果
     console.log(
-      `[search] keyword="${keyword}" platform="${platform}" → ${results.length} 条结果`
+      `[search] keyword="${keyword}" platform="${platform}" → ${ajaxResults.length} 条结果`
     );
 
     return res.json({
       success: true,
       platform,
       keyword,
-      results,
+      source: "ajax",
+      results: ajaxResults,
     });
   } catch (err) {
     console.error(`[search] 抓取失败:`, err.message);
