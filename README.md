@@ -1,50 +1,22 @@
-# 私人网文书架 MVP
+# NovelNook — Personal Web Novel Bookshelf
 
-这是一个微信小程序 MVP，定位是个人网文书单管理，而不是小说聚合阅读器。
+A mobile-first personal bookshelf manager for web novel readers. Track your reading
+journey across multiple platforms (晋江, 长佩, 番茄, 起点) without scraping protected
+content — your data stays local, your reading stays private.
 
-## 当前能力
+## What It Does
 
-- 指定平台并输入小说名
-- 优先检索自己的本地书架
-- 为晋江、长佩、番茄、起点生成官方搜索入口
-- 粘贴晋江作品链接，解析 `novelid`
-- 手动填写书名、作者、字数、状态、简短简介
-- 保存本地书架
-- 记录想看、在看、看完、暂搁、弃文、想二刷
-- 写私人备注和标签
-- 检索/筛选自己的本地书架
-- 复制原站链接回到官方平台
+- Search your personal bookshelf, or look up titles via the backend proxy
+- Import book info by pasting a Jinjiang (晋江) link — auto-extracts the novel ID
+- Manually add books with title, author, platform, word count, status, and notes
+- Track 6 reading states: want to read, reading, finished, paused, dropped, re-read
+- Write private notes and tags (e.g., tropes, deal-breakers, where you left off)
+- Copy the original platform link to jump back to the official site
+- Baidu fallback channel when Jinjiang's built-in search returns no match
 
-## 合规边界
+## Two Ways to Use
 
-- 不抓取小说正文
-- 不抓取付费章节
-- 不抓取平台搜索结果页
-- 不批量展示章节目录
-- 不长期缓存平台文案/封面等可能受保护内容
-- 平台搜索链接只用于让用户回到官方平台确认作品
-- 晋江链接只用于识别来源和作品 ID
-- 用户备注和书单数据保存在本地
-
-## 搜索方案
-
-没有授权 API 时，不建议伪装成聚合搜索来抓取晋江、长佩、番茄、起点的结果页。当前 MVP 采用：
-
-1. 先检索用户自己的本地书架。
-2. 没有命中时生成对应平台的官方搜索入口。
-3. 用户在官方平台确认作品后，可回到小程序手动补充基础信息。
-
-后续如果要做到真正“输入书名就出现结构化候选结果”，更稳的路线是建设自己的公共索引库：只收录用户主动提交并确认的事实字段，如书名、作者、平台、原站链接、字数、状态，不收录正文、付费内容、完整目录和大段文案。
-
-## 为什么这样做
-
-在没有平台授权 API 的情况下，直接爬取晋江、长佩、番茄、起点等平台数据会带来版权、服务协议、反爬和不正当竞争风险。MVP 采用“用户提供链接 + 用户手动确认信息 + 私人本地管理”的方式，把产品核心放在阅读记录、雷点、弃文原因、偏好标签和私人书单上。
-
-## 在线搜索（根据书名抓取晋江链接）
-
-项目包含一个后端搜索代理，可以真正根据书名从晋江搜索页抓取结构化结果（书名、作者、作品 ID、链接、简介摘要）。
-
-### 启动后端
+### 1. Web App (recommended for Android / desktop)
 
 ```bash
 cd backend
@@ -52,26 +24,40 @@ npm install
 node server.js
 ```
 
-服务默认在 `http://localhost:3000` 启动。
+Open **http://localhost:3000** in any browser. The web app is a single-page
+application with a two-panel layout: bookshelf list + search on the left,
+online lookup + edit form on the right. All data is stored in `localStorage`.
 
-### 小程序配置
+### 2. WeChat Mini Program
 
-1. 用微信开发者工具打开项目
-2. 点击右上角「详情」→「本地设置」→ 勾选「不校验合法域名、web-view（业务域名）、TLS 版本以及 HTTPS 证书」
-3. 在小程序里选择「晋江文学城」平台，输入书名，点击「在线检索晋江」
+Open the project root in [WeChat DevTools](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html).
+In DevTools settings, enable **"Do not verify valid domain names"** so the
+backend API calls work during development. The mini program uses `wx.setStorageSync`
+for local persistence.
 
-### API 接口
+> The mini program uses appid `wx9f47290ec4264fe8`. Replace with your own
+> before publishing.
+
+## Backend API
 
 ```
-GET /api/search?keyword=小说名&platform=jjwxc
+GET /api/search?keyword=小说名&platform=jjwxc&author=作者名
 ```
 
-响应示例：
+| Param      | Required | Description                           |
+|------------|----------|---------------------------------------|
+| `keyword`  | Yes      | Book title to search for              |
+| `platform` | No       | Target platform (currently only `jjwxc`) |
+| `author`   | No       | Optional author filter                |
+
+Response:
+
 ```json
 {
   "success": true,
   "platform": "jjwxc",
   "keyword": "小说名",
+  "source": "ajax",
   "results": [
     {
       "title": "书名",
@@ -79,12 +65,51 @@ GET /api/search?keyword=小说名&platform=jjwxc
       "novelid": "1234567",
       "sourceUrl": "https://www.jjwxc.net/onebook.php?novelid=1234567",
       "platform": "晋江文学城",
-      "brief": "简介摘要..."
+      "brief": "简介片段…"
     }
   ]
 }
 ```
 
-## 运行方式
+The backend uses a **dual-channel strategy**:
+1. Jinjiang's `search_ajax.php` JSON API — fast, returns up to 5 results
+2. Baidu search fallback — broader coverage, supports author filtering
 
-用微信开发者工具打开本目录即可预览。`appid` 当前使用 `touristappid`，正式发布前需要替换为自己的小程序 AppID。
+## Compliance Boundaries
+
+- ❌ No scraping of chapter content, paid chapters, or table of contents
+- ❌ No long-term caching of platform covers, synopses, or protected text
+- ❌ No impersonating an official platform client or aggregator
+- ✅ Public bibliographic metadata only (title, author, novel ID, link)
+- ✅ Search links direct users back to the official platform
+- ✅ All user notes and bookshelf data stored locally
+
+## Project Structure
+
+```
+.
+├── app.js / app.json / app.wxss    # WeChat Mini Program entry
+├── pages/index/                    # Mini program main page
+├── backend/
+│   ├── server.js                   # Express search proxy
+│   ├── scraper.js                  # Jinjiang search (AJAX + Baidu fallback)
+│   ├── public/
+│   │   ├── index.html              # Web app shell
+│   │   ├── app.js                  # Web app logic (localStorage)
+│   │   └── style.css               # Web app styles
+│   └── package.json
+└── .specify/                       # Spec-Kit governance docs
+```
+
+## Tech Stack
+
+| Layer    | Technology                  |
+|----------|-----------------------------|
+| Web App  | Vanilla HTML/CSS/JS         |
+| Mini App | WeChat Mini Program (WXML/WXSS/JS) |
+| Backend  | Node.js + Express + Axios   |
+| Storage  | localStorage / wx.Storage (zero server-side persistence) |
+
+## License
+
+MIT
