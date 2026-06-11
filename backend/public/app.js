@@ -324,6 +324,17 @@ function init() {
   renderBookList();
   resetForm();
 
+  // Tab 切换
+  document.querySelectorAll(".nav-tab").forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const pageId = tab.dataset.page;
+      document.querySelectorAll(".nav-tab").forEach((t) => t.classList.remove("active"));
+      tab.classList.add("active");
+      document.querySelectorAll(".page").forEach((p) => p.classList.remove("active"));
+      document.getElementById(pageId).classList.add("active");
+    });
+  });
+
   // 事件绑定
   $("#filterKeyword").addEventListener("input", renderBookList);
   $("#filterStatus").addEventListener("change", renderBookList);
@@ -334,6 +345,25 @@ function init() {
 
   document.querySelectorAll(".status-btn").forEach((btn) => {
     btn.addEventListener("click", () => setReadingStatus(btn.dataset.v));
+  });
+
+  // 导入成功后自动跳回书架
+  function switchToBookshelf() {
+    document.querySelectorAll(".nav-tab").forEach((t) => t.classList.remove("active"));
+    document.querySelector('.nav-tab[data-page="pageMyBooks"]').classList.add("active");
+    document.querySelectorAll(".page").forEach((p) => p.classList.remove("active"));
+    document.getElementById("pageMyBooks").classList.add("active");
+  }
+
+  // Hook save 和 import 后跳转
+  const origSave = saveBook;
+  saveBook = function() { origSave(); if (!editingId) switchToBookshelf(); };
+
+  // 在线搜索直接导入也跳转
+  document.addEventListener("click", (e) => {
+    if (e.target.closest(".import-btn") || e.target.closest(".fill-form-btn")) {
+      setTimeout(() => switchToBookshelf(), 500);
+    }
   });
 }
 

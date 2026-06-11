@@ -2,84 +2,91 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>私人书架</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- 顶部栏 -->
   <header>
     <h1>📚 私人书架</h1>
-    <span class="badge">本地管理 · 不搬运正文</span>
   </header>
 
-  <main>
-    <!-- 左栏：书架列表 -->
-    <section class="left-panel">
-      <!-- 搜索/筛选工具栏 -->
-      <div class="toolbar">
-        <input id="filterKeyword" type="text" placeholder="搜索我的书架…" class="field">
-        <select id="filterStatus" class="field">
-          <option value="">全部</option>
-          <option value="want">想看</option>
-          <option value="reading">在看</option>
-          <option value="done">看完</option>
-          <option value="paused">暂搁</option>
-          <option value="dropped">弃文</option>
-          <option value="reread">想二刷</option>
-        </select>
+  <!-- 页面容器 -->
+  <div id="pageMyBooks" class="page active">
+    <!-- 搜索筛选 -->
+    <div class="toolbar">
+      <input id="filterKeyword" type="text" placeholder="搜索我的书架…" class="field">
+      <select id="filterStatus" class="field select-sm">
+        <option value="">全部</option>
+        <option value="want">想看</option>
+        <option value="reading">在看</option>
+        <option value="done">看完</option>
+        <option value="paused">暂搁</option>
+        <option value="dropped">弃文</option>
+        <option value="reread">想二刷</option>
+      </select>
+    </div>
+    <div id="bookCount" class="count-info">共 0 本</div>
+    <div id="bookList" class="book-list"></div>
+  </div>
+
+  <div id="pageSearch" class="page">
+    <!-- 在线搜索 -->
+    <div class="card">
+      <h2>🔍 在线检索晋江</h2>
+      <input id="searchKeyword" type="text" placeholder="输入小说名" class="field mb-sm">
+      <input id="searchAuthor" type="text" placeholder="作者（可选，用于筛选重名）" class="field mb-sm">
+      <button id="searchOnlineBtn" class="btn primary full-width">搜索</button>
+      <div id="searchStatus" class="hint mt-sm"></div>
+      <div id="searchResults" class="search-results"></div>
+    </div>
+
+    <!-- 编辑表单 -->
+    <div class="card">
+      <h2 id="formTitle">✏️ 添加书籍</h2>
+      <input id="fTitle" type="text" placeholder="小说名称 *" class="field mb-sm">
+      <div class="form-row">
+        <input id="fAuthor" type="text" placeholder="作者" class="field">
+        <input id="fPlatform" type="text" placeholder="平台" class="field" value="晋江文学城">
+      </div>
+      <div class="form-row">
+        <input id="fWordCount" type="text" placeholder="字数 (如 32.5万)" class="field">
+        <input id="fStatus" type="text" placeholder="状态 (连载/完结)" class="field">
+      </div>
+      <input id="fSourceId" type="text" placeholder="作品 ID" class="field mb-sm">
+      <input id="fSourceUrl" type="text" placeholder="原站链接" class="field mb-sm">
+      <textarea id="fSummary" placeholder="文案/简介（简短记录）" rows="2" class="field mb-sm"></textarea>
+      <textarea id="fNotes" placeholder="私人备注：好看点、雷点、看到哪里…" rows="3" class="field mb-sm"></textarea>
+      <input id="fTags" type="text" placeholder="标签，逗号分隔，如 强剧情,群像" class="field mb-sm">
+
+      <div class="reading-status-bar">
+        <button class="status-btn" data-v="want">想看</button>
+        <button class="status-btn active" data-v="reading">在看</button>
+        <button class="status-btn" data-v="done">看完</button>
+        <button class="status-btn" data-v="paused">暂搁</button>
+        <button class="status-btn" data-v="dropped">弃文</button>
+        <button class="status-btn" data-v="reread">二刷</button>
       </div>
 
-      <div id="bookCount" class="count-info">共 0 本</div>
-      <div id="bookList" class="book-list"></div>
-    </section>
-
-    <!-- 右栏：编辑表单 & 在线搜索 -->
-    <section class="right-panel">
-      <!-- 在线搜索 -->
-      <div class="card">
-        <h2>🔍 在线检索晋江</h2>
-        <div class="form-row">
-          <input id="searchKeyword" type="text" placeholder="输入小说名" class="field">
-          <input id="searchAuthor" type="text" placeholder="作者（可选）" class="field">
-          <button id="searchOnlineBtn" class="btn primary">搜索</button>
-        </div>
-        <div id="searchStatus" class="hint"></div>
-        <div id="searchResults" class="search-results"></div>
+      <div class="form-actions">
+        <button id="saveBtn" class="btn primary full-width">加入书架</button>
+        <button id="cancelBtn" class="btn ghost full-width">清空</button>
       </div>
+    </div>
+  </div>
 
-      <!-- 编辑表单 -->
-      <div class="card">
-        <h2 id="formTitle">✏️ 添加书籍</h2>
-        <div class="form-grid">
-          <input id="fTitle" type="text" placeholder="小说名称 *" class="field">
-          <input id="fAuthor" type="text" placeholder="作者" class="field">
-          <input id="fPlatform" type="text" placeholder="平台" class="field" value="晋江文学城">
-          <input id="fWordCount" type="text" placeholder="字数，如 32.5万" class="field">
-          <input id="fStatus" type="text" placeholder="状态，如 连载/完结" class="field">
-          <input id="fSourceId" type="text" placeholder="作品 ID" class="field">
-        </div>
-        <input id="fSourceUrl" type="text" placeholder="原站链接" class="field full-width">
-        <textarea id="fSummary" placeholder="文案/简介（简短记录）" rows="2" class="field full-width"></textarea>
-        <textarea id="fNotes" placeholder="私人备注：好看点、雷点、弃文原因…" rows="3" class="field full-width"></textarea>
-        <input id="fTags" type="text" placeholder="标签，逗号分隔，如 强剧情,群像" class="field full-width">
-
-        <div class="reading-status-bar">
-          <span class="label">阅读状态：</span>
-          <button class="status-btn" data-v="want">想看</button>
-          <button class="status-btn active" data-v="reading">在看</button>
-          <button class="status-btn" data-v="done">看完</button>
-          <button class="status-btn" data-v="paused">暂搁</button>
-          <button class="status-btn" data-v="dropped">弃文</button>
-          <button class="status-btn" data-v="reread">想二刷</button>
-        </div>
-
-        <div class="form-actions">
-          <button id="saveBtn" class="btn primary">加入书架</button>
-          <button id="cancelBtn" class="btn ghost">清空</button>
-        </div>
-      </div>
-    </section>
-  </main>
+  <!-- 底部 Tab 导航 -->
+  <nav class="bottom-nav">
+    <button class="nav-tab active" data-page="pageMyBooks">
+      <span class="nav-icon">📖</span>
+      <span class="nav-label">我的书架</span>
+    </button>
+    <button class="nav-tab" data-page="pageSearch">
+      <span class="nav-icon">➕</span>
+      <span class="nav-label">搜索添加</span>
+    </button>
+  </nav>
 
   <script src="app.js"></script>
 </body>
