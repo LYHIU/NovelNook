@@ -1,13 +1,17 @@
 <!--
   Sync Impact Report
   ==================
-  Version change: 1.0.0 → 1.1.0
-  Bump rationale: MINOR — materially expanded Principle I with "去 AI 味" design guidance.
+  Version change: 1.1.0 → 1.2.0
+  Bump rationale: MINOR — materially expanded branch workflow with agent-based development model;
+                         added "文档与沟通语言" section mandating Chinese-first documentation.
 
-  Modified principles:
-    - I. 用户至上，简洁直观 — added sub-rule: UI 设计去除 AI 味，追求手工质感与人格化表达
+  Modified sections:
+    - 开发工作流与质量门禁.分支策略 — added Claude Code agent/view per-branch workflow
+    - 开发工作流与质量门禁.质量门禁 — added human verification gate before merge to master
 
-  Added sections: none
+  Added sections:
+    - 文档与沟通语言 (Documentation & Communication Language)
+
   Removed sections: none
 
   Templates requiring updates:
@@ -121,9 +125,13 @@
 
 ### 分支策略
 
-- `main` 分支为稳定发布分支，MUST 始终可部署。
-- 功能开发在 `feature/<描述>` 分支进行，完成后通过 PR 合入 `main`。
-- 紧急修复可直接从 `main` 创建 `fix/<描述>` 分支。
+- `main`（或 `master`）分支为稳定发布分支，MUST 始终可部署。
+- 功能开发在独立的 `feature/<描述>` 分支上进行，一个分支对应一个用户故事或独立功能。
+- 紧急修复直接在 `fix/<描述>` 分支进行。
+- **Agent 并行开发模式**：不同功能使用 Claude Code 的 agent / view 机制在不同分支上
+  独立并行开发，各分支互不干扰。每个 agent 聚焦单一分支的功能实现。
+- 功能分支上的代码 MUST 经过人工验证确认无误后，方可合入 `main`/`master` 主分支。
+  禁止未经人工验证的 agent 产出直接进入稳定分支。
 
 ### 质量门禁
 
@@ -132,6 +140,8 @@
   - 相关用户故事的独立测试通过
   - 合规自评（如涉及第三方平台数据）
   - 无回归问题（已有功能正常）
+  - **人工验证门禁**：agent 产出的功能分支 MUST 经过人工 review 和实际运行验证，
+    确认功能正确、交互流畅、无异常后方可合并到主分支。
 - 提交信息 MUST 使用约定式提交格式（`feat:`, `fix:`, `chore:`, `docs:`, `refactor:`）。
 
 ### 技术选型原则
@@ -139,6 +149,21 @@
 - 优先选择轻量级方案，不过度工程化。
 - 新依赖引入 MUST 有明确理由（大小、维护状态、许可证兼容性）。
 - 技术栈 MUST 适配移动端优先的约束（包体积、性能、离线能力）。
+
+## 文档与沟通语言
+
+本项目的开发者和目标用户均为中文母语者，文档语言 MUST 遵循以下规则：
+
+- 项目文档（README、spec、plan、tasks、checklist、本宪法）MUST 使用中文撰写。
+- 代码注释 SHOULD 使用中文，便于所有贡献者理解和维护。
+- 提交信息 MUST 使用约定式提交格式（英文前缀 `feat:` / `fix:` 等），
+  但描述内容 SHOULD 使用中文，例如 `feat: 添加批量导入书单功能`。
+- API 文档中的字段名、端点路径保持英文（符合技术惯例），说明文字使用中文。
+- 代码标识符（变量名、函数名）SHOULD 使用英文（符合编程规范），避免拼音。
+- GitHub Issues、PR 描述、设计讨论 MUST 使用中文。
+
+**理由**: 中文文档降低团队沟通成本，减少翻译歧义，让非技术背景的用户也能理解项目
+设计决策。代码层面的英文标识符保持与国际化编程生态的兼容性。
 
 ## Governance
 
@@ -170,4 +195,4 @@
 
 日常开发细节（目录结构、命令、工具链）参见当前功能 plan.md 中 Technical Context 章节和项目 README.md。本宪法定义 What & Why，plan 定义 How。
 
-**Version**: 1.1.0 | **Ratified**: 2026-06-11 | **Last Amended**: 2026-06-11
+**Version**: 1.2.0 | **Ratified**: 2026-06-11 | **Last Amended**: 2026-06-11
