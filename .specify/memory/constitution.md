@@ -1,50 +1,173 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+  Sync Impact Report
+  ==================
+  Version change: 1.0.0 → 1.1.0
+  Bump rationale: MINOR — materially expanded Principle I with "去 AI 味" design guidance.
+
+  Modified principles:
+    - I. 用户至上，简洁直观 — added sub-rule: UI 设计去除 AI 味，追求手工质感与人格化表达
+
+  Added sections: none
+  Removed sections: none
+
+  Templates requiring updates:
+    - .specify/templates/plan-template.md     ✅ No changes needed
+    - .specify/templates/spec-template.md     ✅ No changes needed
+    - .specify/templates/tasks-template.md    ✅ No changes needed
+    - .specify/templates/checklist-template.md ✅ No changes needed
+    - .specify/templates/constitution-template.md ✅ No changes needed
+
+  Follow-up TODOs: none
+-->
+
+# 书架管家 (Bookshelf Manager) 宪法
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. 用户至上，简洁直观
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+面向普通用户设计，交互必须美观、简单、直观。每一个界面和操作流程 MUST 优先考虑非技术用户的认知习惯。
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+- UI/UX 决策 MUST 以降低学习成本为首要目标，默认值合理、反馈即时。
+- 移动端优先：所有界面 MUST 在 Android 手机尺寸（360dp–414dp 宽度）上可用且美观。
+- 每个交互 MUST 在 3 次点击/滑动以内完成核心任务。
+- 文案 MUST 使用中文白话，避免技术术语。
+- **UI 设计去除 AI 味**：视觉设计 MUST 避免 AI 生成式设计的典型特征——
+  过度光滑的渐变、无意义的几何装饰、千篇一律的弥散阴影、缺乏文化细节的
+  通用插画、机械般均匀的排版节奏。界面 SHOULD 追求手工质感与人格化表达：
+  自然的不对称留白、有温度的配色、契合网文读者文化的细节（如书签、批注、
+  阅读进度标记等隐喻）、适度的拟物化触感。设计评审 MUST 包含"AI 味检查"：
+  如果界面让人联想到 AI 生成模板而非真人设计，则必须返工。
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+**理由**: 目标用户为普通网络小说读者，非技术人员。复杂交互直接导致用户流失。
+用户对千篇一律的 AI 生成式界面产生审美疲劳，手工质感的设计建立信任与情感连接。
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### II. 独立可测，渐进上线
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+每个功能模块 MUST 能够独立开发、独立测试、独立上线，不依赖其他模块的完成状态。
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+- 功能拆分 MUST 遵循用户故事优先级（P1 → P2 → P3），每个故事可独立交付价值。
+- 每个用户故事 MUST 有明确的独立测试标准——只实现该故事即可验证其价值。
+- MVP 优先交付最高优先级用户故事，后续渐进增强。
+- 新功能 MUST NOT 破坏已有功能（回归测试门禁）。
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+**理由**: 独立可测确保质量可控，渐进上线降低发布风险，MVP 快速验证核心假设。
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### III. 合规优先，尊重版权
+
+涉及网络小说平台（晋江、长佩、番茄、起点等）的任何功能，MUST 在设计阶段就查询相关法律法规，确保不侵犯版权、不违反平台服务协议、不构成不正当竞争。
+
+- 任何涉及第三方平台数据的功能 MUST 在 spec 阶段完成合规评估。
+- MUST NOT 抓取小说正文、付费章节内容、平台搜索结果页。
+- MUST NOT 批量展示章节目录或长期缓存平台受版权保护的文案/封面。
+- MUST NOT 伪装成平台官方客户端或聚合搜索引擎。
+- 平台搜索链接 ONLY 用于引导用户回到官方平台确认作品。
+- 爬虫/搜索代理功能 MUST 只抓取公开可访问的书目元数据（书名、作者、作品ID、链接），不抓取正文或付费内容。
+
+**理由**: 网络小说平台数据受版权法和服务协议保护，违规爬取面临法律风险。合规设计是产品可持续的前提。
+
+### IV. 数据本地化，用户掌控
+
+用户的书架数据、阅读记录、备注标签等私人数据 MUST 默认存储在本地，用户拥有完全控制权。
+
+- 本地存储 MUST 作为默认和主要的数据存储方式。
+- 任何云端同步功能 MUST 为 opt-in，用户主动开启后才生效。
+- 用户 MUST 能够导出全部数据为可读格式（JSON/CSV）。
+- MUST NOT 在未经用户明确同意的情况下上传任何个人数据到服务器。
+- 后端搜索代理 MUST NOT 记录或持久化用户的搜索关键词与用户身份关联。
+
+**理由**: 书架数据属于用户隐私，本地优先保护用户隐私，降低数据泄露风险，同时减少服务端运维成本。
+
+### V. 平台尊重，伦理集成
+
+与第三方平台的交互 MUST 遵循最小必要原则：只获取用户明确需要的书目元数据，尊重平台的技术边界和商业利益。
+
+- 请求频率 MUST 遵守合理节制，不对第三方平台造成负担。
+- User-Agent MUST 明确标识自身身份，不伪装成浏览器或其他客户端。
+- 尊重 robots.txt 和平台公开声明的爬取政策。
+- 如平台提供官方 API，MUST 优先使用官方 API 而非页面抓取。
+- 搜索结果 MUST 标注来源平台，引导用户回到官方平台获取完整信息。
+
+**理由**: 伦理集成建立长期可持续的生态关系，避免被平台封禁或面临法律挑战。
+
+## 合规与伦理边界
+
+本节为 III 号和 V 号原则提供可操作的合规检查清单。
+
+### 禁止行为（红线）
+
+- ❌ 抓取、缓存、展示任何平台的付费章节内容
+- ❌ 批量抓取并展示章节目录
+- ❌ 长期缓存平台封面图、简介文案等受版权保护内容
+- ❌ 伪装成平台官方客户端或替代平台阅读体验
+- ❌ 绕过平台反爬机制（验证码识别、IP 池轮换等规避手段）
+- ❌ 将抓取数据用于商业化或再分发
+
+### 允许行为
+
+- ✅ 用户手动粘贴作品链接，解析作品 ID 用于记录
+- ✅ 生成平台官方搜索入口链接，引导用户到官方平台
+- ✅ 抓取公开书目元数据（书名、作者、作品ID、字数、状态），通过官方搜索接口
+- ✅ 用户手动填写和补充书籍信息
+- ✅ 本地存储用户的阅读记录、标签、备注、书单
+
+### 新功能合规评估流程
+
+1. 功能 spec 编写阶段 MUST 标注涉及的数据来源和平台交互方式。
+2. 如涉及第三方平台数据，MUST 在 spec 中附合规自评（参照以上禁止/允许清单）。
+3. 如有灰色地带，MUST 在设计评审中讨论并记录决策理由。
+
+## 开发工作流与质量门禁
+
+### 分支策略
+
+- `main` 分支为稳定发布分支，MUST 始终可部署。
+- 功能开发在 `feature/<描述>` 分支进行，完成后通过 PR 合入 `main`。
+- 紧急修复可直接从 `main` 创建 `fix/<描述>` 分支。
+
+### 质量门禁
+
+- 每个 PR MUST 通过以下检查后才能合入：
+  - 代码在目标平台（Android 移动浏览器）上手动验证通过
+  - 相关用户故事的独立测试通过
+  - 合规自评（如涉及第三方平台数据）
+  - 无回归问题（已有功能正常）
+- 提交信息 MUST 使用约定式提交格式（`feat:`, `fix:`, `chore:`, `docs:`, `refactor:`）。
+
+### 技术选型原则
+
+- 优先选择轻量级方案，不过度工程化。
+- 新依赖引入 MUST 有明确理由（大小、维护状态、许可证兼容性）。
+- 技术栈 MUST 适配移动端优先的约束（包体积、性能、离线能力）。
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+本宪法是项目最高指导文件，所有设计决策、代码审查和功能规划 MUST 以本宪法为基准。
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+### 修订流程
+
+1. 提议修订 MUST 以文档形式提出，说明变更内容和理由。
+2. 修订 MUST 经过项目维护者评审并批准。
+3. 涉及核心原则的修订 MUST 在变更记录中标注 MAJOR 版本号变更。
+4. 修订后 MUST 更新 `.specify/memory/constitution.md` 中的版本号和日期。
+5. 修订生效后 MUST 检查并更新受影响的模板和文档。
+
+### 版本策略
+
+遵循语义化版本 (SemVer)：
+
+- **MAJOR**: 移除或重新定义核心原则，治理规则发生向后不兼容变更。
+- **MINOR**: 新增原则或章节，显著扩展指导范围。
+- **PATCH**: 措辞澄清、拼写修正、非语义性调整。
+
+### 合规审查
+
+- 每个功能 spec MUST 在 "Constitution Check" 章节逐条对照本宪法原则进行自查。
+- 代码审查 MUST 验证实现是否符合本宪法中与当前功能相关的原则。
+- 如因技术或业务原因需要偏离某条原则，MUST 在 plan.md 的 Complexity Tracking 表格中记录并说明理由。
+
+### 运行时开发指引
+
+日常开发细节（目录结构、命令、工具链）参见当前功能 plan.md 中 Technical Context 章节和项目 README.md。本宪法定义 What & Why，plan 定义 How。
+
+**Version**: 1.1.0 | **Ratified**: 2026-06-11 | **Last Amended**: 2026-06-11
