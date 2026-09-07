@@ -1,0 +1,16 @@
+{
+  "appId": "com.novelnook.reading",
+  "appName": "页间",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "allowMixedContent": false
+  },
+  "plugins": {
+    "CapacitorHttp": {
+      "enabled": false
+    }
+  }
+}

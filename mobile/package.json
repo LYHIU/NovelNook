@@ -1,0 +1,34 @@
+{
+  "name": "yejian-android",
+  "version": "1.0.0",
+  "description": "页间 Android app",
+  "scripts": {
+    "build:web": "node build-web.cjs",
+    "sync": "npm run build:web && npx cap sync android"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LYHIU/NovelNook.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/LYHIU/NovelNook/issues"
+  },
+  "homepage": "https://github.com/LYHIU/NovelNook#readme",
+  "dependencies": {
+    "@capacitor/android": "^8.5.1",
+    "@capacitor/app": "^8.1.1",
+    "@capacitor/cli": "^8.5.1",
+    "@capacitor/core": "^8.5.1",
+    "@capacitor/filesystem": "^8.1.3",
+    "@capacitor/preferences": "^8.0.1",
+    "@capacitor/share": "^8.0.1",
+    "buffer": "^6.0.3",
+    "cheerio": "^1.2.0",
+    "esbuild": "^0.28.2",
+    "iconv-lite": "^0.7.3"
+  }
+}

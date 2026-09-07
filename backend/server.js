@@ -18,6 +18,18 @@ const path = require("path");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+app.use('/api/ai', require('./overview').createRouter());
+app.use('/api/fanqie', require('./fanqie').createRouter());
+app.use('/api/jinjiang', require('./jinjiang').createRouter());
+
+
+app.use('/vendor/ocr', express.static(path.join(__dirname,'node_modules/tesseract.js/dist')));
+app.use('/vendor/ocr-core', express.static(path.join(__dirname,'node_modules/tesseract.js-core')));
+app.get('/vendor/ocr-data/:file',(req,res)=>{
+ const lang={'chi_sim.traineddata.gz':'chi_sim','eng.traineddata.gz':'eng'}[req.params.file];
+ if(!lang)return res.sendStatus(404);
+ res.sendFile(path.join(__dirname,'node_modules/@tesseract.js-data',lang,'4.0.0',req.params.file));
+});
 
 // ----- 静态文件 -----
 app.use(express.static(path.join(__dirname, "public")));

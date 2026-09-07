@@ -1,0 +1,10 @@
+deepseek.txt
+node_modules/
+output/playwright/
+
+output/android-tools/
+output/apk/
+mobile/www/
+mobile/generated/
+mobile/.signing/
+mobile/.gradle-cache/
