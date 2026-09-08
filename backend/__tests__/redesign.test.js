@@ -8,3 +8,11 @@ test('长佩资料隔离字段，纯文本化文案，验证作品身份',()=>{c
 test('长佩搜索、作者结果与番茄响应校验',()=>{assert.equal(cp.parseSearch({code:200,data:{list:[{novel_id:1,novel_name:'书',novel_author:'甲'}]}},'甲').length,1);assert.throws(()=>cp.parseSearch({code:500}));assert.equal(cp.parseAuthors({code:200,data:{list:[{user_id:215,user_nickname:'卡比丘'}]}}).authors[0].externalUrl,'https://www.gongzicp.com/zone/user-215.html');assert.equal(fq.parseSearchResponse({code:0,data:{search_book_data_list:[{book_id:'7218822722090961958',book_name:'书'}]}}).results[0].sourceId,'7218822722090961958');assert.throws(()=>fq.parseSearchResponse(''));assert.throws(()=>fq.parseSearchResponse({code:0}));});
 test('OCR 无空间块时识别明确书名、精确字数，平台冲突留空',()=>{const r=ocr.parse({text:'长佩文学\n书名：入睡指南\n作者：卡比丘\n字数：140,556\n完结',confidence:95});assert.equal(r.platform,'changpei');assert.equal(r.title,'入睡指南');assert.equal(r.wordCount,140556);assert.equal(r.serialStatus,'完结');assert.equal(ocr.parse({text:'长佩文学 番茄小说'}).platform,'');assert.equal(ocr.parse({text:'字数：24.0万字'}).wordCount,'24.0万');});
 test('AI 总览接受新增的刚开始看状态',async()=>{const app=require('express')();app.use('/api/ai',require('../overview').createRouter({getKey:()=> 'test',post:async()=>({data:{choices:[{finish_reason:'stop',message:{content:'刚读开头。'}}]}})}));const server=app.listen(0,'127.0.0.1');await new Promise(r=>server.once('listening',r));try{const res=await fetch('http://127.0.0.1:'+server.address().port+'/api/ai/overview',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title:'书',status:'刚开始看',entries:[{text:'刚读开头',createdAt:Date.now()}]})});assert.equal(res.status,200);}finally{server.close();}});
+
+test('原文链接保留已有地址，缺失时仅按已知平台和有效作品 ID 恢复',()=>{
+ assert.equal(ui.sourceUrl({sourceUrl:'https://example.com/book?id=1'}),'https://example.com/book?id=1');
+ assert.equal(ui.sourceUrl({platform:'晋江文学城',sourceId:'9299461'}),'https://www.jjwxc.net/onebook.php?novelid=9299461');
+ assert.equal(ui.sourceUrl({platformCode:'fanqie',sourceId:'7218822722090961958'}),'https://fanqienovel.com/page/7218822722090961958');
+ assert.equal(ui.sourceUrl({platform:'长佩文学',sourceId:'8879'}),'https://www.gongzicp.com/novel-8879.html');
+ for(const book of [{sourceUrl:'javascript:alert(1)'},{platform:'晋江',sourceId:'1&evil=2'},{platform:'未知',sourceId:'123'},{platform:'晋江'}])assert.equal(ui.sourceUrl(book),'');
+});
