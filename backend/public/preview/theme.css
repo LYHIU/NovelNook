@@ -1,0 +1,95 @@
+/* Theme choices are shared; other rules are scoped to the glass theme. */
+.theme-settings{padding:8px 0 24px;border-bottom:1px solid var(--line)}
+.theme-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px}
+.theme-option{min-width:0;padding:7px;border-radius:15px;text-align:left;background:var(--surface)}
+.theme-option[aria-pressed=true]{border-color:var(--green);box-shadow:0 0 0 1px var(--green)}
+.theme-option-label{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:9px 5px 3px;font-size:13px;font-weight:600}
+.theme-check{display:grid;place-items:center;width:19px;height:19px;border-radius:50%;background:var(--green);color:white;font-size:12px;visibility:hidden}
+.theme-option[aria-pressed=true] .theme-check{visibility:visible}
+.theme-sample{display:block;height:106px;position:relative;overflow:hidden;border-radius:9px;border:1px solid #223c3510}
+.sample-flat{background:#f8f8f2;color:#285747}
+.sample-glass{background:radial-gradient(ellipse at 10% 90%,#b0daf2,transparent 65%),radial-gradient(ellipse at 100% 10%,#d5caf2,transparent 70%),#eef2fa;color:#3665ae}
+.theme-sample>span{position:absolute;display:block}
+.sample-search{left:12px;right:12px;top:10px;height:13px;border-radius:4px;background:#fff;border:1px solid #dce3d9}
+.sample-book{left:13px;top:33px;width:24px;height:33px;border-radius:2px 4px 4px 2px;background:currentColor;opacity:.7}
+.sample-lines{left:46px;right:16px;top:37px;height:4px;border-radius:4px;background:currentColor;opacity:.35;box-shadow:0 9px currentColor,0 18px currentColor}
+.sample-nav{bottom:0;left:0;right:0;height:23px;background:#e8efe5;border-top:1px solid #dce3d9}
+.sample-nav::after{content:'';display:block;width:20%;height:7px;margin:7px auto;background:currentColor;border-radius:8px;opacity:.6}
+.sample-glass .sample-nav{left:12px;right:12px;bottom:7px;height:22px;border:1px solid #fffd;border-radius:15px;background:#ffffff65;box-shadow:0 3px 7px #4c659724,inset 0 1px 2px #fff}
+.sample-glass .sample-search{border-radius:9px;background:#ffffff85;border-color:#fff}
+
+:root[data-theme=glass]{--paper:#f2f5fb;--surface:#ffffffb8;--ink:#243146;--muted:#5e6b80;--line:#6e83a52b;--green:#285fac;--soft:#e5edfa;--accent:#b8d2f8;--glass-fill:#ffffff80;--glass-edge:#ffffffdc;--glass-shadow:0 5px 16px #2946740c,inset 0 1px 1px #fff,inset 0 -1px 1px #819bc01a}
+:root[data-theme=glass] body{background:#e3e9f3;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+:root[data-theme=glass] .app{position:relative;isolation:isolate;background:transparent}
+:root[data-theme=glass] .app::before{content:'';position:fixed;z-index:-1;inset:0;left:50%;transform:translateX(-50%);width:min(760px,100%);pointer-events:none;background:radial-gradient(ellipse 80% 40% at 110% 5%,#d9d3f49c,transparent 80%),radial-gradient(ellipse 95% 40% at -10% 100%,#add8eead,transparent 85%),radial-gradient(ellipse 70% 30% at 110% 95%,#d7d0f382,transparent 85%),linear-gradient(165deg,#f4f7fc,#f2f5fa 55%,#e7edf8)}
+:root[data-theme=glass] header{border-bottom-color:transparent}
+:root[data-theme=glass] .brand-name{letter-spacing:2px}
+:root[data-theme=glass] .brand-mark{filter:hue-rotate(72deg) saturate(.75);border-radius:13px;box-shadow:0 3px 8px #24457218}
+:root[data-theme=glass] h1{font-family:inherit;letter-spacing:0}
+:root[data-theme=glass] button{transition:background .18s,box-shadow .18s,transform .16s}
+:root[data-theme=glass] button:active{transform:scale(.975);transition-duration:80ms}
+:root[data-theme=glass] :is(button,a,input,textarea,select,summary):focus-visible{outline-color:#4f7bbe}
+:root[data-theme=glass] :is(input,textarea,select){background:#ffffffa8;border-color:#fff;border-radius:14px;box-shadow:inset 0 1px 3px #3851770b}
+:root[data-theme=glass] :is(input,textarea):focus{border-color:#8aa9d9}
+:root[data-theme=glass] :is(button.primary,button.danger){border-radius:24px;box-shadow:inset 0 1px 1px #ffffff65,0 4px 10px #285fac20}
+:root[data-theme=glass] button.primary{background:linear-gradient(160deg,#3c73bb,#2c60ad);border-color:#4d7ebf}
+:root[data-theme=glass] button.primary:hover{background:#24579f}
+:root[data-theme=glass] .search-field{background:var(--glass-fill);border:1px solid var(--glass-edge);border-radius:26px;box-shadow:var(--glass-shadow);backdrop-filter:blur(16px) saturate(1.35);-webkit-backdrop-filter:blur(16px) saturate(1.35)}
+:root[data-theme=glass] .search-field input{background:transparent;box-shadow:none;border-radius:0}
+:root[data-theme=glass] .search-field>.icon{color:#637895}
+:root[data-theme=glass] .search-field:focus-within{border-color:#8eaedb;box-shadow:0 0 0 3px #3972c21a,inset 0 1px #fff}
+:root[data-theme=glass] .icon-button{border-radius:50%}
+:root[data-theme=glass] .filter-chips{gap:8px}
+:root[data-theme=glass] .sort-row{border-bottom:0}
+:root[data-theme=glass] .sort-options button[aria-pressed=true]{box-shadow:none;background:#ffffffad;border-radius:22px}
+:root[data-theme=glass] .shelf-count{margin-top:14px;margin-bottom:10px}
+:root[data-theme=glass] .book{padding:18px 15px;margin-bottom:10px;gap:14px;border:1px solid #ffffffc7;border-radius:19px;background:#ffffffa6;box-shadow:0 4px 12px #334f7905}
+:root[data-theme=glass] .book:hover{background:#ffffffe0}
+:root[data-theme=glass] .book-line strong{font-size:16px}
+:root[data-theme=glass] .book-meta{color:var(--muted);gap:6px}
+:root[data-theme=glass] .platform-label{color:#626e80;background:#edf0f6}
+:root[data-theme=glass] :is(.excerpt,.synopsis .prose){color:#566478}
+:root[data-theme=glass] .cover{border-radius:4px 9px 9px 4px;box-shadow:inset 4px 0 #ffffff20,0 4px 8px #34496e17}
+:root[data-theme=glass] .overview{background:#ffffffad;border-color:#ffffffd9;border-radius:20px;box-shadow:0 4px 16px #34496e08}
+:root[data-theme=glass] .note{border-left-color:#b2c6e4}
+:root[data-theme=glass] .note-progress{color:#566d91}
+:root[data-theme=glass] .reading-current select{background:var(--state-bg);color:var(--state-ink);border-radius:20px;box-shadow:none}
+:root[data-theme=glass] .platform-options button{background:#ffffff7a;border-color:#fff;border-radius:17px;box-shadow:var(--glass-shadow)}
+:root[data-theme=glass] .platform-options button[aria-pressed=true]{background:#e4edffba;border-color:#8bade0;box-shadow:inset 0 1px #fff,0 0 0 1px #91addc30}
+:root[data-theme=glass] .mode-options{background:#b2c1d526;border:1px solid #ffffff9c;border-radius:27px}
+:root[data-theme=glass] .mode-options button{border-radius:23px}
+:root[data-theme=glass] .mode-options button[aria-pressed=true]{background:#ffffffd9;box-shadow:0 2px 6px #42557714,inset 0 1px #fff}
+:root[data-theme=glass] .import-card{background:#ffffff80;border:1px solid #fff;border-radius:21px;box-shadow:var(--glass-shadow)}
+:root[data-theme=glass] .theme-option{background:#ffffff65;border-color:#fff;border-radius:19px;box-shadow:var(--glass-shadow)}
+:root[data-theme=glass] .theme-option[aria-pressed=true]{border-color:#6c96d0;box-shadow:0 0 0 1px #6c96d0,inset 0 1px #fff}
+:root[data-theme=glass] .settings-row>button{border-radius:24px;background:#ffffffa6;border-color:#fff;box-shadow:var(--glass-shadow)}
+:root[data-theme=glass] nav{width:min(440px,calc(100% - 36px));bottom:calc(16px + env(safe-area-inset-bottom));border:1px solid var(--glass-edge);border-radius:36px;padding:6px;gap:4px;justify-content:stretch;background:#ffffff65;box-shadow:0 10px 32px #3d568b20,0 2px 6px #3d568b0d,inset 0 1px 2px #fff,inset 0 -1px 2px #ffffffaa;backdrop-filter:blur(10px) saturate(1.5);-webkit-backdrop-filter:blur(10px) saturate(1.5)}
+:root[data-theme=glass] nav button{position:relative;z-index:1;flex:1;min-width:0;min-height:56px;border-radius:29px;padding:5px 12px;gap:3px;font-size:11px;color:#52627a}
+:root[data-theme=glass] nav button[aria-current=page]{color:#285fac;background:#ffffffb8;border-radius:29px;box-shadow:0 2px 7px #3857860d,inset 0 1px #fff}
+:root[data-theme=glass] nav button:hover{background:#ffffff80}
+:root[data-theme=glass] dialog{border-color:#fff;border-radius:26px;background:#f4f7fce8;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:0 20px 60px #253a5d2b,inset 0 1px #fff}
+:root[data-theme=glass] dialog::backdrop{background:#23395545}
+:root[data-theme=glass] #toast{background:#344561ed;border:1px solid #ffffff50;border-radius:22px;bottom:calc(104px + env(safe-area-inset-bottom))}
+
+/* Refraction is confined to navigation, where content passes underneath. */
+@supports (backdrop-filter:url("#yejian-glass")){
+  :root[data-theme=glass] nav::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;backdrop-filter:url("#yejian-glass");-webkit-backdrop-filter:url("#yejian-glass")}
+}
+@media(max-width:480px){
+  :root[data-theme=glass] main{padding-top:24px}
+  :root[data-theme=glass] .book{padding:17px 13px;gap:12px}
+  :root[data-theme=glass] .book .cover{width:62px;height:94px}
+  :root[data-theme=glass] .book-meta{font-size:12px}
+}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  :root[data-theme=glass] :is(nav,.search-field,dialog){background:#f7f9fd}
+}
+@media(prefers-reduced-transparency:reduce),(prefers-contrast:more){
+  :root[data-theme=glass] :is(nav,.search-field,dialog){background:#f7f9fd;backdrop-filter:none;-webkit-backdrop-filter:none;border-color:#8296b2}
+  :root[data-theme=glass] :is(.book,.overview,.platform-options button,.theme-option,.import-card){background:#fff}
+  :root[data-theme=glass] .app::before{background:#f2f5fb}
+  :root[data-theme=glass] nav::before{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  :root[data-theme=glass] button:active{transform:none}
+}
