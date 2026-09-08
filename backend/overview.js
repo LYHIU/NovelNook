@@ -2,7 +2,7 @@ const fs=require('node:fs'),path=require('node:path'),express=require('express')
 const MODEL='deepseek-v4-flash';
 function readKey(){if(process.env.DEEPSEEK_API_KEY)return process.env.DEEPSEEK_API_KEY.trim();try{return fs.readFileSync(path.join(__dirname,'..','deepseek.txt'),'utf8').match(/\bsk-[A-Za-z0-9_-]+\b/)?.[0]||'';}catch{return '';}}
 function normalizeBook(b){
- if(!b||typeof b.title!=='string'||!b.title.trim()||b.title.length>200||!['想看','在看','看完','暂搁','弃文','想二刷'].includes(b.status)||!Array.isArray(b.entries)||!b.entries.length||b.entries.length>500)throw Error('请提供书名、阅读状态和至少一条笔记。');
+ if(!b||typeof b.title!=='string'||!b.title.trim()||b.title.length>200||!['想看','刚开始看','在看','看完','暂搁','弃文','想二刷'].includes(b.status)||!Array.isArray(b.entries)||!b.entries.length||b.entries.length>500)throw Error('请提供书名、阅读状态和至少一条笔记。');
  const entries=b.entries.map(n=>{
  if(!n||typeof n.text!=='string'||!n.text.trim()||n.text.length>20000||typeof(n.progress||'')!=='string'||(n.progress||'').length>200||!Number.isFinite(n.createdAt)||!Number.isFinite(new Date(n.createdAt).getTime()))throw Error('笔记内容或日期不正确。');
  return {date:new Date(n.createdAt).toISOString(),progress:n.progress||'',text:n.text};

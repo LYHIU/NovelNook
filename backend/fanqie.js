@@ -18,6 +18,17 @@ function parseAuthorBooks(html,id){
  if(!p?.serverRendered)throw Error('未找到作者');
  return {author:{id,name:p.name||''},results:(p.bookListRes?.book_list||[]).filter(b=>validId(b.book_id)).map(b=>({sourceId:b.book_id,title:b.book_name,author:p.name,platform:'番茄小说',sourceUrl:'https://fanqienovel.com/page/'+b.book_id})),total:p.bookListRes?.total_count};
 }
+function searchUrl(keyword,page=1){return 'https://fanqienovel.com/api/author/search/search_book/v1?'+new URLSearchParams({query_word:keyword,page_index:String(page-1),page_count:'10',query_type:'0',filter:'127,127,127,127'});}
+function parseSearchResponse(response,mode='search',author=''){
+ const raw=typeof response==='string'&&response.trim()?JSON.parse(response):response;
+ if(!raw||typeof raw!=='object'||raw.code!==0||!raw.data)throw Error('番茄搜索暂时需要官网验证，可使用作品链接或截图确认录入。');
+ const d=raw.data;if(mode==='authors'){
+  if(!Array.isArray(d.search_author_data_list))throw Error('番茄未返回可用的作者搜索结果。');
+  return {authors:d.search_author_data_list.filter(a=>validId(a.author_id)).map(a=>({id:a.author_id,name:a.author_name||a.name||''})),hasMore:false};
+ }
+ if(!Array.isArray(d.search_book_data_list))throw Error('番茄未返回可用的书籍搜索结果。');
+ return {results:d.search_book_data_list.filter(b=>validId(b.book_id)&&b.book_name).map(b=>({sourceId:b.book_id,title:b.book_name,author:b.author||b.author_name||'',platform:'番茄小说'})).filter(b=>!author||b.author.includes(author))};
+}
 function createRouter({fetchPage=getPage}={}){
  const r=express.Router();r.use((_req,res,next)=>{res.setHeader('Cache-Control','no-store');next();});
  r.get('/book/:id',async(req,res)=>{if(!validId(req.params.id))return res.status(400).json({error:'作品 ID 不正确。'});try{res.json({book:parseBook(await fetchPage('https://fanqienovel.com/page/'+req.params.id),req.params.id)});}catch{res.status(502).json({error:'番茄作品资料暂时无法读取，请核对官方作品链接后重试。'});}});
@@ -26,13 +37,10 @@ function createRouter({fetchPage=getPage}={}){
  const keyword=typeof req.query.keyword==='string'?req.query.keyword.trim():'';
  if(!keyword||keyword.length>200)return res.status(400).json({error:'请输入搜索关键词。'});
  try{
- const data=await fetchPage('https://fanqienovel.com/api/author/search/search_book/v1?'+new URLSearchParams({query_word:keyword,page_index:String((Number(req.query.page)||1)-1),page_count:'10',query_type:'0',filter:'127,127,127,127'}));
- if(!data||typeof data!=='object'||data.code!==0)throw Error('SEARCH_UNAVAILABLE');
- const d=data.data||{};
- if(mode==='authors')res.json({authors:(d.search_author_data_list||[]).filter(a=>validId(a.author_id)).map(a=>({id:a.author_id,name:a.author_name||a.name||''})),hasMore:false});
- else res.json({results:(d.search_book_data_list||[]).filter(b=>validId(b.book_id)).map(b=>({sourceId:b.book_id,title:b.book_name,author:b.author||b.author_name||'',platform:'番茄小说'})).filter(b=>!req.query.author||b.author.includes(req.query.author))});
- }catch{res.status(503).json({error:'番茄当前未返回可用的搜索结果。请在番茄官网搜索，再粘贴作品或作者主页链接。'});}
+ const n=Number(req.query.page||1);if(!Number.isInteger(n)||n<1||n>100)return res.status(400).json({error:'页码不正确。'});
+ const data=await fetchPage(searchUrl(keyword,n));res.json(parseSearchResponse(data,mode,typeof req.query.author==='string'?req.query.author:''));
+ }catch{res.status(503).json({error:'番茄搜索暂时需要官网验证。可粘贴作品链接，或使用截图确认录入。'});}
  });
  return r;
 }
-module.exports={createRouter,parseBook,parseAuthorBooks,state,validId};
+module.exports={createRouter,parseBook,parseAuthorBooks,state,validId,searchUrl,parseSearchResponse};

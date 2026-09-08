@@ -8,3 +8,6 @@ mobile/www/
 mobile/generated/
 mobile/.signing/
 mobile/.gradle-cache/
+
+.codegraph/
+.playwright-cli/

@@ -19,6 +19,7 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use('/api/ai', require('./overview').createRouter());
+app.use('/api/changpei', require('./changpei').createRouter());
 app.use('/api/fanqie', require('./fanqie').createRouter());
 app.use('/api/jinjiang', require('./jinjiang').createRouter());
 
