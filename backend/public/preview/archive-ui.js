@@ -3,10 +3,10 @@
  const stateCodes=['want','starting','reading','finished','paused','dropped','reread'];
  const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  function stateCode(value){return stateCodes[states.indexOf(value)]||'want';}
- function wordCount(value){
+ function wordCount(value,compact=false){
   const n=typeof value==='number'?value:/^\d[\d,，]*$/.test(String(value||''))?Number(String(value).replace(/[,，]/g,'')):NaN;
   if(!Number.isSafeInteger(n)||n<0)return value?String(value):'字数未提供';
-  return n>=10000?`${Math.round(n/1000)/10}万（${n.toLocaleString('en-US')}）`:`${n.toLocaleString('en-US')} 字`;
+  return compact?(n>0&&n<100?'<0.01万字':(n/10000).toLocaleString('en-US',{maximumFractionDigits:n<10000?2:1})+'万字'):`${n.toLocaleString('en-US')} 字`;
  }
  function highlight(value,query){
   const text=String(value??''),needle=String(query||'').trim();if(!needle)return escape(text);
