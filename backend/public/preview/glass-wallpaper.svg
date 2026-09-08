@@ -13,4 +13,5 @@
   <path d="M740 70C280 290 650 440 230 670S240 970 820 930" stroke="url(#light)" stroke-width="94" filter="url(#soft)"/>
   <path d="M805 250C350 430 570 560 182 750S170 1065 820 1010" stroke="white" stroke-opacity=".28" stroke-width="9" filter="url(#fold)"/>
   <path d="M-40 1030C240 1220 480 1000 820 1180" stroke="#f8f2ff" stroke-opacity=".46" stroke-width="80" filter="url(#soft)"/>
+  <path fill="#f7f9f8" fill-opacity=".62" d="M0 0h760v1400H0z"/>
 </svg>

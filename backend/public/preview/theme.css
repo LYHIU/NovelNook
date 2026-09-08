@@ -8,7 +8,7 @@
 .theme-option[aria-pressed=true] .theme-check{visibility:visible}
 .theme-sample{display:block;height:106px;position:relative;overflow:hidden;border-radius:9px;border:1px solid #223c3510}
 .sample-flat{background:#f8f8f2;color:#285747}
-.sample-glass{background:#c7ded7 url("glass-wallpaper.svg") center/cover;color:#285b75}
+.sample-glass{background:#edf2f0 url("glass-wallpaper.svg") center/cover;color:#285b75}
 .theme-sample>span{position:absolute;display:block}
 .sample-search{left:12px;right:12px;top:10px;height:13px;border-radius:4px;background:#fff;border:1px solid #dce3d9}
 .sample-book{left:13px;top:33px;width:24px;height:33px;border-radius:2px 4px 4px 2px;background:currentColor;opacity:.7}
@@ -21,7 +21,7 @@
 :root[data-theme=glass]{--paper:#eaf1ef;--surface:#ffffff66;--ink:#213544;--muted:#334b59;--line:#37546725;--green:#1f4e8a;--soft:#e5edfa;--accent:#b8d2f8;--glass-fill:#ffffff30;--glass-edge:#ffffff6b;--glass-shadow:0 7px 20px #294f6120,0 1px 3px #244a6010,inset 0 1px 1px #ffffffb3,inset 1px 0 2px #ffffff59,inset 0 -1px 2px #44666d33,inset 0 0 12px #ffffff30}
 :root[data-theme=glass] body{background:#e3e9f3;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
 :root[data-theme=glass] .app{position:relative;isolation:isolate;background:transparent}
-:root[data-theme=glass] .app::before{content:"";position:fixed;z-index:-1;inset:0;left:50%;transform:translateX(-50%);width:min(760px,100%);pointer-events:none;background:#c7ded7 url("glass-wallpaper.svg") center/cover no-repeat}
+:root[data-theme=glass] .app::before{content:"";position:fixed;z-index:-1;inset:0;left:50%;transform:translateX(-50%);width:min(760px,100%);pointer-events:none;background:#edf2f0 url("glass-wallpaper.svg") center/cover no-repeat}
 :root[data-theme=glass] header{border-bottom-color:transparent}
 :root[data-theme=glass] .brand-name{letter-spacing:2px}
 :root[data-theme=glass] .brand-mark{border-radius:13px;box-shadow:0 3px 8px #24457218}
