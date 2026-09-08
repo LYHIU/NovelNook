@@ -18,7 +18,7 @@ function fixImages(){document.querySelectorAll('.cover img').forEach(img=>{img.o
 function count(b,compact=false){return ArchiveUI.wordCount(b.wordCount,compact);}
 function startAdd(){lookup={keyword:'',author:'',results:null,mode:'book',authors:[],authorPage:1};add();}
 function chips(values,current,attribute){return values.map(value=>'<button type="button" class="chip '+(STATES.includes(value)?'state-'+ArchiveUI.stateCode(value):'')+'" '+attribute+'="'+escapeHtml(value)+'" aria-pressed="'+(value===current)+'">'+escapeHtml(value||'全部')+'</button>').join('');}
-function bookHeading(b){const words=escapeHtml(count(b));return '<div class="book-heading">'+cover(b,true)+'<div><h1>'+escapeHtml(b.title)+'</h1><p class="book-author">'+escapeHtml(b.author||'作者未填')+'</p><p class="book-source"><span>'+escapeHtml(b.platform)+'</span><span>'+escapeHtml(b.serialStatus||'连载状态未提供')+'</span></p></div><div class="book-heading-footer"><p class="book-metrics"><span>字数</span><strong>'+words+'</strong></p>'+sourceLink(b)+'</div></div>';}
+function bookHeading(b){return '<div class="book-heading">'+cover(b,true)+'<div><h1>'+escapeHtml(b.title)+'</h1><p class="book-author">'+escapeHtml(b.author||'作者未填')+'</p><p class="book-source">'+escapeHtml(b.platform)+' · '+escapeHtml(b.serialStatus||'连载状态未提供')+'</p><p class="book-metrics">'+escapeHtml(count(b))+'</p>'+sourceLink(b)+'</div></div>';}
 
 function sourceLink(b){const u=safeUrl(ArchiveUI.sourceUrl(b));return u?'<a class="source-link" href="'+escapeHtml(u)+'" target="_blank" rel="noopener noreferrer">'+escapeHtml(b.platform||'作品')+'原页 ↗</a>':'';}
 
