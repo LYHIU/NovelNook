@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="1400" viewBox="0 0 760 1400" fill="none">
+  <defs>
+    <linearGradient id="base" x1="80" y1="0" x2="690" y2="1400" gradientUnits="userSpaceOnUse"><stop stop-color="#e9efe5"/><stop offset=".43" stop-color="#c7ded7"/><stop offset="1" stop-color="#bac8e5"/></linearGradient>
+    <linearGradient id="sage" x1="600" y1="100" x2="130" y2="860" gradientUnits="userSpaceOnUse"><stop stop-color="#8db9a4" stop-opacity=".65"/><stop offset=".55" stop-color="#aed2be"/><stop offset="1" stop-color="#dcece0" stop-opacity=".1"/></linearGradient>
+    <linearGradient id="blue" x1="300" y1="650" x2="620" y2="1390" gradientUnits="userSpaceOnUse"><stop stop-color="#78adb4" stop-opacity=".7"/><stop offset=".58" stop-color="#a4bfde"/><stop offset="1" stop-color="#b7abdd"/></linearGradient>
+    <linearGradient id="light" x1="110" y1="370" x2="600" y2="1060" gradientUnits="userSpaceOnUse"><stop stop-color="white" stop-opacity=".15"/><stop offset=".5" stop-color="white" stop-opacity=".83"/><stop offset="1" stop-color="#eef7ff" stop-opacity=".1"/></linearGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="25"/></filter>
+    <filter id="fold"><feGaussianBlur stdDeviation="7"/></filter>
+  </defs>
+  <path fill="url(#base)" d="M0 0h760v1400H0z"/>
+  <path d="M770-110C100 10 930 380 160 620S-220 1060 240 1160" stroke="url(#sage)" stroke-width="340" filter="url(#soft)"/>
+  <path d="M930 480C350 580 780 900 220 1030S-90 1280 160 1510" stroke="url(#blue)" stroke-width="360" filter="url(#soft)"/>
+  <path d="M740 70C280 290 650 440 230 670S240 970 820 930" stroke="url(#light)" stroke-width="94" filter="url(#soft)"/>
+  <path d="M805 250C350 430 570 560 182 750S170 1065 820 1010" stroke="white" stroke-opacity=".28" stroke-width="9" filter="url(#fold)"/>
+  <path d="M-40 1030C240 1220 480 1000 820 1180" stroke="#f8f2ff" stroke-opacity=".46" stroke-width="80" filter="url(#soft)"/>
+</svg>

@@ -8,7 +8,7 @@
 .theme-option[aria-pressed=true] .theme-check{visibility:visible}
 .theme-sample{display:block;height:106px;position:relative;overflow:hidden;border-radius:9px;border:1px solid #223c3510}
 .sample-flat{background:#f8f8f2;color:#285747}
-.sample-glass{background:radial-gradient(ellipse at 10% 90%,#b0daf2,transparent 65%),radial-gradient(ellipse at 100% 10%,#d5caf2,transparent 70%),#eef2fa;color:#3665ae}
+.sample-glass{background:#c7ded7 url("glass-wallpaper.svg") center/cover;color:#285b75}
 .theme-sample>span{position:absolute;display:block}
 .sample-search{left:12px;right:12px;top:10px;height:13px;border-radius:4px;background:#fff;border:1px solid #dce3d9}
 .sample-book{left:13px;top:33px;width:24px;height:33px;border-radius:2px 4px 4px 2px;background:currentColor;opacity:.7}
@@ -18,13 +18,13 @@
 .sample-glass .sample-nav{left:12px;right:12px;bottom:7px;height:22px;border:1px solid #fffd;border-radius:15px;background:#ffffff65;box-shadow:0 3px 7px #4c659724,inset 0 1px 2px #fff}
 .sample-glass .sample-search{border-radius:9px;background:#ffffff85;border-color:#fff}
 
-:root[data-theme=glass]{--paper:#f2f5fb;--surface:#ffffffb8;--ink:#243146;--muted:#5e6b80;--line:#6e83a52b;--green:#285fac;--soft:#e5edfa;--accent:#b8d2f8;--glass-fill:#ffffff80;--glass-edge:#ffffffdc;--glass-shadow:0 5px 16px #2946740c,inset 0 1px 1px #fff,inset 0 -1px 1px #819bc01a}
+:root[data-theme=glass]{--paper:#eaf1ef;--surface:#ffffff66;--ink:#213544;--muted:#334b59;--line:#37546725;--green:#1f4e8a;--soft:#e5edfa;--accent:#b8d2f8;--glass-fill:#ffffff30;--glass-edge:#ffffff6b;--glass-shadow:0 7px 20px #294f6120,0 1px 3px #244a6010,inset 0 1px 1px #ffffffb3,inset 1px 0 2px #ffffff59,inset 0 -1px 2px #44666d33,inset 0 0 12px #ffffff30}
 :root[data-theme=glass] body{background:#e3e9f3;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
 :root[data-theme=glass] .app{position:relative;isolation:isolate;background:transparent}
-:root[data-theme=glass] .app::before{content:'';position:fixed;z-index:-1;inset:0;left:50%;transform:translateX(-50%);width:min(760px,100%);pointer-events:none;background:radial-gradient(ellipse 80% 40% at 110% 5%,#d9d3f49c,transparent 80%),radial-gradient(ellipse 95% 40% at -10% 100%,#add8eead,transparent 85%),radial-gradient(ellipse 70% 30% at 110% 95%,#d7d0f382,transparent 85%),linear-gradient(165deg,#f4f7fc,#f2f5fa 55%,#e7edf8)}
+:root[data-theme=glass] .app::before{content:"";position:fixed;z-index:-1;inset:0;left:50%;transform:translateX(-50%);width:min(760px,100%);pointer-events:none;background:#c7ded7 url("glass-wallpaper.svg") center/cover no-repeat}
 :root[data-theme=glass] header{border-bottom-color:transparent}
 :root[data-theme=glass] .brand-name{letter-spacing:2px}
-:root[data-theme=glass] .brand-mark{filter:hue-rotate(72deg) saturate(.75);border-radius:13px;box-shadow:0 3px 8px #24457218}
+:root[data-theme=glass] .brand-mark{border-radius:13px;box-shadow:0 3px 8px #24457218}
 :root[data-theme=glass] h1{font-family:inherit;letter-spacing:0}
 :root[data-theme=glass] button{transition:background .18s,box-shadow .18s,transform .16s}
 :root[data-theme=glass] button:active{transform:scale(.975);transition-duration:80ms}
@@ -34,7 +34,7 @@
 :root[data-theme=glass] :is(button.primary,button.danger){border-radius:24px;box-shadow:inset 0 1px 1px #ffffff65,0 4px 10px #285fac20}
 :root[data-theme=glass] button.primary{background:linear-gradient(160deg,#3c73bb,#2c60ad);border-color:#4d7ebf}
 :root[data-theme=glass] button.primary:hover{background:#24579f}
-:root[data-theme=glass] .search-field{background:var(--glass-fill);border:1px solid var(--glass-edge);border-radius:26px;box-shadow:var(--glass-shadow);backdrop-filter:blur(16px) saturate(1.35);-webkit-backdrop-filter:blur(16px) saturate(1.35)}
+:root[data-theme=glass] .search-field{position:relative;background:linear-gradient(150deg,#ffffff60,#ffffff16 60%,#ffffff38);border:1px solid var(--glass-edge);border-radius:26px;box-shadow:var(--glass-shadow);backdrop-filter:blur(7px) saturate(1.3);-webkit-backdrop-filter:blur(7px) saturate(1.3)}
 :root[data-theme=glass] .search-field input{background:transparent;box-shadow:none;border-radius:0}
 :root[data-theme=glass] .search-field>.icon{color:#637895}
 :root[data-theme=glass] .search-field:focus-within{border-color:#8eaedb;box-shadow:0 0 0 3px #3972c21a,inset 0 1px #fff}
@@ -43,37 +43,65 @@
 :root[data-theme=glass] .sort-row{border-bottom:0}
 :root[data-theme=glass] .sort-options button[aria-pressed=true]{box-shadow:none;background:#ffffffad;border-radius:22px}
 :root[data-theme=glass] .shelf-count{margin-top:14px;margin-bottom:10px}
-:root[data-theme=glass] .book{padding:18px 15px;margin-bottom:10px;gap:14px;border:1px solid #ffffffc7;border-radius:19px;background:#ffffffa6;box-shadow:0 4px 12px #334f7905}
-:root[data-theme=glass] .book:hover{background:#ffffffe0}
+:root[data-theme=glass] .book{padding:18px 15px;margin-bottom:12px;gap:14px;border:1px solid var(--glass-edge);border-radius:22px;background:linear-gradient(125deg,#ffffff57,#ffffff24 48%,#ffffff38);box-shadow:var(--glass-shadow);backdrop-filter:blur(9px) saturate(1.2);-webkit-backdrop-filter:blur(9px) saturate(1.2)}
+:root[data-theme=glass] .book:hover{background-color:#ffffff18}
 :root[data-theme=glass] .book-line strong{font-size:16px}
 :root[data-theme=glass] .book-meta{color:var(--muted);gap:6px}
 :root[data-theme=glass] .platform-label{color:#626e80;background:#edf0f6}
-:root[data-theme=glass] :is(.excerpt,.synopsis .prose){color:#566478}
+:root[data-theme=glass] :is(.excerpt,.synopsis .prose){color:#334b59}
 :root[data-theme=glass] .cover{border-radius:4px 9px 9px 4px;box-shadow:inset 4px 0 #ffffff20,0 4px 8px #34496e17}
-:root[data-theme=glass] .overview{background:#ffffffad;border-color:#ffffffd9;border-radius:20px;box-shadow:0 4px 16px #34496e08}
+:root[data-theme=glass] .overview{position:relative;background:linear-gradient(135deg,#ffffff70,#ffffff38);border-color:var(--glass-edge);border-radius:23px;box-shadow:var(--glass-shadow);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 :root[data-theme=glass] .note{border-left-color:#b2c6e4}
-:root[data-theme=glass] .note-progress{color:#566d91}
+:root[data-theme=glass] .note-progress{color:#315369}
 :root[data-theme=glass] .reading-current select{background:var(--state-bg);color:var(--state-ink);border-radius:20px;box-shadow:none}
-:root[data-theme=glass] .platform-options button{background:#ffffff7a;border-color:#fff;border-radius:17px;box-shadow:var(--glass-shadow)}
-:root[data-theme=glass] .platform-options button[aria-pressed=true]{background:#e4edffba;border-color:#8bade0;box-shadow:inset 0 1px #fff,0 0 0 1px #91addc30}
+:root[data-theme=glass] .platform-options button{position:relative;background:linear-gradient(135deg,#ffffff60,#ffffff24);border-color:var(--glass-edge);border-radius:18px;box-shadow:var(--glass-shadow);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}
+:root[data-theme=glass] .platform-options button[aria-pressed=true]{background:linear-gradient(130deg,#d6ebffad,#80b6ef47);border-color:#ffffffd6;box-shadow:var(--glass-shadow),0 0 0 1px #376fa439}
 :root[data-theme=glass] .mode-options{background:#b2c1d526;border:1px solid #ffffff9c;border-radius:27px}
 :root[data-theme=glass] .mode-options button{border-radius:23px}
 :root[data-theme=glass] .mode-options button[aria-pressed=true]{background:#ffffffd9;box-shadow:0 2px 6px #42557714,inset 0 1px #fff}
-:root[data-theme=glass] .import-card{background:#ffffff80;border:1px solid #fff;border-radius:21px;box-shadow:var(--glass-shadow)}
-:root[data-theme=glass] .theme-option{background:#ffffff65;border-color:#fff;border-radius:19px;box-shadow:var(--glass-shadow)}
+:root[data-theme=glass] .import-card{position:relative;background:linear-gradient(130deg,#ffffff52,#ffffff1c);border:1px solid var(--glass-edge);border-radius:24px;box-shadow:var(--glass-shadow);backdrop-filter:blur(8px) saturate(1.3);-webkit-backdrop-filter:blur(8px) saturate(1.3)}
+:root[data-theme=glass] .theme-option{position:relative;background:#ffffff35;border-color:var(--glass-edge);border-radius:19px;box-shadow:var(--glass-shadow);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 :root[data-theme=glass] .theme-option[aria-pressed=true]{border-color:#6c96d0;box-shadow:0 0 0 1px #6c96d0,inset 0 1px #fff}
-:root[data-theme=glass] .settings-row>button{border-radius:24px;background:#ffffffa6;border-color:#fff;box-shadow:var(--glass-shadow)}
-:root[data-theme=glass] nav{width:min(440px,calc(100% - 36px));bottom:calc(16px + env(safe-area-inset-bottom));border:1px solid var(--glass-edge);border-radius:36px;padding:6px;gap:4px;justify-content:stretch;background:#ffffff65;box-shadow:0 10px 32px #3d568b20,0 2px 6px #3d568b0d,inset 0 1px 2px #fff,inset 0 -1px 2px #ffffffaa;backdrop-filter:blur(10px) saturate(1.5);-webkit-backdrop-filter:blur(10px) saturate(1.5)}
-:root[data-theme=glass] nav button{position:relative;z-index:1;flex:1;min-width:0;min-height:56px;border-radius:29px;padding:5px 12px;gap:3px;font-size:11px;color:#52627a}
-:root[data-theme=glass] nav button[aria-current=page]{color:#285fac;background:#ffffffb8;border-radius:29px;box-shadow:0 2px 7px #3857860d,inset 0 1px #fff}
-:root[data-theme=glass] nav button:hover{background:#ffffff80}
+:root[data-theme=glass] .settings-row>button{position:relative;border-radius:24px;background:linear-gradient(145deg,#ffffff60,#ffffff20);border-color:var(--glass-edge);box-shadow:var(--glass-shadow);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+:root[data-theme=glass] nav{width:min(440px,calc(100% - 36px));bottom:calc(16px + env(safe-area-inset-bottom));border:1px solid #ffffff85;border-radius:36px;padding:6px;gap:4px;justify-content:stretch;background:linear-gradient(150deg,#ffffff56,#ffffff0d 55%,#ffffff36);box-shadow:0 12px 32px #27455635,0 2px 6px #25466120,inset 0 1px 2px #ffffffd9,inset 1px 0 2px #ffffff73,inset 0 -1px 2px #6173814d,inset 0 0 15px #ffffff40;backdrop-filter:blur(9px) saturate(1.5);-webkit-backdrop-filter:blur(9px) saturate(1.5)}
+:root[data-theme=glass] nav button{position:relative;z-index:1;flex:1;min-width:0;min-height:56px;border-radius:29px;padding:5px 12px;gap:3px;font-size:11px;color:#344c5d}
+:root[data-theme=glass] nav button[aria-current=page]{color:#194f87;background:transparent;box-shadow:none;border-radius:29px}
+:root[data-theme=glass] nav button:hover{background:#ffffff14}
 :root[data-theme=glass] dialog{border-color:#fff;border-radius:26px;background:#f4f7fce8;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:0 20px 60px #253a5d2b,inset 0 1px #fff}
 :root[data-theme=glass] dialog::backdrop{background:#23395545}
 :root[data-theme=glass] #toast{background:#344561ed;border:1px solid #ffffff50;border-radius:22px;bottom:calc(104px + env(safe-area-inset-bottom))}
 
-/* Refraction is confined to navigation, where content passes underneath. */
+/* Darker secondary text stays legible over the richer wallpaper. */
+:root[data-theme=glass] input::placeholder{color:#425b67;opacity:1}
+:root[data-theme=glass] .filter-chips .state-want{--state-ink:#505035}
+:root[data-theme=glass] .filter-chips .state-starting{--state-ink:#624805}
+:root[data-theme=glass] .filter-chips .state-reading{--state-ink:#194532}
+:root[data-theme=glass] .filter-chips .state-finished{--state-ink:#28516f}
+:root[data-theme=glass] .filter-chips .state-paused{--state-ink:#61462f}
+:root[data-theme=glass] .filter-chips .state-dropped{--state-ink:#803743}
+:root[data-theme=glass] .filter-chips .state-reread{--state-ink:#5b3f74}
+
+/* A narrow reflective rim and a local highlight keep the material readable. */
+:root[data-theme=glass] :is(.book,.overview,.import-card,.platform-options button,.theme-option,.settings-row>button,.search-field,nav)::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;padding:.75px;background:conic-gradient(from 155deg at var(--glass-x,30%) var(--glass-y,15%),#ffffff18,#fff 22%,#ffffff18 35%,#ffffff08 55%,#d4edffdb 70%,#fff 86%,#ffffff18);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;opacity:.65}
+:root[data-theme=glass] [data-glass-lit]::after{opacity:1}
+.nav-lens{display:none}
+:root[data-theme=glass] .nav-lens{display:block;position:absolute;pointer-events:none;top:6px;bottom:6px;left:0;width:var(--lens-width,30%);transform:translateX(var(--lens-x,6px));border-radius:29px;border:1px solid #ffffffa6;background:radial-gradient(ellipse at var(--glass-x,30%) 0%,#ffffffc7,transparent 72%),linear-gradient(140deg,#ffffff7d,#ffffff20);box-shadow:0 3px 9px #2f53671f,inset 0 1px 1px #fff,inset 0 -1px 2px #ffffffb3;transition:transform .38s cubic-bezier(.22,1,.36,1),width .25s ease-out}
+:root[data-theme=glass] .search-field:focus-within::after{opacity:1}
+:root[data-theme=glass] :is(.search-field,.import-card,.book,.platform-options button){transition:background .2s,box-shadow .2s,transform .18s}
+:root[data-theme=glass] :is(.search-field,.import-card,.book,.platform-options button)[data-glass-lit]{box-shadow:var(--glass-shadow),inset 0 0 24px #ffffff20}
+
+/* Keep tint and rims above refraction, so the glass never refracts its own border. */
+:root[data-theme=glass] .app :is(.book,nav){background:transparent;border-color:transparent;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+:root[data-theme=glass] .app .book[data-glass-lit]{box-shadow:none}
+:root[data-theme=glass] .app :is(.book,nav)::before{content:"";position:absolute;inset:-1px;border-radius:inherit;pointer-events:none;backdrop-filter:blur(8px) saturate(1.3);-webkit-backdrop-filter:blur(8px) saturate(1.3)}
+:root[data-theme=glass] .app :is(.book,nav)::after{inset:-1px;padding:0;border:1px solid #ffffff8c;opacity:1;background:radial-gradient(ellipse at var(--glass-x,20%) var(--glass-y,0%),#ffffff42,transparent 62%),linear-gradient(125deg,#ffffff3d,#ffffff14 50%,#ffffff29);box-shadow:var(--glass-shadow);-webkit-mask:none;mask:none}
+:root[data-theme=glass] .app .book>span{position:relative;z-index:1}
+:root[data-theme=glass] .app nav::after{box-shadow:0 10px 28px #27455630,inset 0 1px 2px #ffffffd9,inset 0 -1px 2px #6173814d,inset 0 0 12px #ffffff35}
+:root[data-theme=glass] .app .nav-lens{z-index:1}
+:root[data-theme=glass] .app nav button{z-index:2}
 @supports (backdrop-filter:url("#yejian-glass")){
-  :root[data-theme=glass] nav::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;backdrop-filter:url("#yejian-glass");-webkit-backdrop-filter:url("#yejian-glass")}
+  :root[data-theme=glass] .app .book:nth-of-type(-n+3)::before{backdrop-filter:blur(6px) url("#yejian-glass-card") saturate(1.2);-webkit-backdrop-filter:blur(6px) url("#yejian-glass-card") saturate(1.2)}
+  :root[data-theme=glass] .app nav::before{backdrop-filter:blur(8px) url("#yejian-glass") saturate(1.4);-webkit-backdrop-filter:blur(8px) url("#yejian-glass") saturate(1.4)}
 }
 @media(max-width:480px){
   :root[data-theme=glass] main{padding-top:24px}
@@ -82,14 +110,16 @@
   :root[data-theme=glass] .book-meta{font-size:12px}
 }
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
-  :root[data-theme=glass] :is(nav,.search-field,dialog){background:#f7f9fd}
+  :root[data-theme=glass] .app :is(nav,.search-field,dialog,.book,.overview,.import-card,.platform-options button,.theme-option,.settings-row>button){background:#f7f9fd}
 }
 @media(prefers-reduced-transparency:reduce),(prefers-contrast:more){
-  :root[data-theme=glass] :is(nav,.search-field,dialog){background:#f7f9fd;backdrop-filter:none;-webkit-backdrop-filter:none;border-color:#8296b2}
-  :root[data-theme=glass] :is(.book,.overview,.platform-options button,.theme-option,.import-card){background:#fff}
+  :root[data-theme=glass] .app :is(nav,.search-field,dialog){background:#f7f9fd;backdrop-filter:none;-webkit-backdrop-filter:none;border-color:#8296b2}
+  :root[data-theme=glass] .app :is(.book,.overview,.platform-options button,.theme-option,.import-card,.settings-row>button){background:#fff;backdrop-filter:none;-webkit-backdrop-filter:none}
+  :root[data-theme=glass] .app .nav-lens{background:#dfeaf6;border-color:#6a86a8;box-shadow:none}
+  :root[data-theme=glass] .app :is(.book,.overview,.import-card,.platform-options button,.theme-option,.settings-row>button,.search-field,nav)::after{display:none}
   :root[data-theme=glass] .app::before{background:#f2f5fb}
-  :root[data-theme=glass] nav::before{display:none}
+  :root[data-theme=glass] .app nav::before,:root[data-theme=glass] .app .book::before{display:none}
 }
 @media(prefers-reduced-motion:reduce){
-  :root[data-theme=glass] button:active{transform:none}
+  :root[data-theme=glass] .app button:active{transform:none}
 }
